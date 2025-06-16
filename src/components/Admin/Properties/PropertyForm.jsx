@@ -45,7 +45,7 @@ const PropertyForm = () => {
             propertyService.getPropertyTypes(),
             propertyService.getSaleTypes(),
             propertyService.getFeatures(),
-          ],
+          ]
         );
 
         if (propertyTypesRes.error) throw propertyTypesRes.error;
@@ -90,21 +90,34 @@ const PropertyForm = () => {
         setValue("propertyTypeId", data.property_type_id);
         setValue("saleTypeId", data.sale_type_id);
 
-        // Set images
-        if (data.property_images) {
+        // Set images - handle both property_images and images arrays
+        if (data.property_images && data.property_images.length > 0) {
           setImages(
             data.property_images.map((img) => ({
               id: img.id,
               url: img.image_url,
               order: img.order,
-            })),
+            }))
+          );
+        } else if (data.images && data.images.length > 0) {
+          setImages(
+            data.images.map((img, index) => ({
+              id: img.id || index,
+              url: img.url || img.image_url,
+              order: img.order || index,
+            }))
           );
         }
 
-        // Set features
-        if (data.property_features) {
+        // Set features - handle both property_features and features arrays
+        if (data.property_features && data.property_features.length > 0) {
           const featureIds = data.property_features
-            .map((pf) => pf.feature?.id)
+            .map((pf) => pf.feature?.id || pf.feature_id)
+            .filter(Boolean);
+          setSelectedFeatures(featureIds);
+        } else if (data.features && data.features.length > 0) {
+          const featureIds = data.features
+            .map((f) => f.id || f)
             .filter(Boolean);
           setSelectedFeatures(featureIds);
         }
@@ -125,20 +138,39 @@ const PropertyForm = () => {
     setError(null);
 
     try {
+      // Ensure proper data types for numeric fields and clean up data
       const propertyData = {
-        ...data,
+        title: data.title?.trim() || '',
+        location: data.location?.trim() || '',
+        price: parseFloat(data.price) || 0,
+        bedrooms: parseInt(data.bedrooms) || 0,
+        bathrooms: parseInt(data.bathrooms) || 0,
+        squareFeet: parseInt(data.squareFeet) || 0,
+        description: data.description?.trim() || '',
+        floorPlanUrl: data.floorPlanUrl?.trim() || '',
+        neighborhood: data.neighborhood?.trim() || '',
+        propertyTypeId: data.propertyTypeId?.trim() || '',
+        saleTypeId: data.saleTypeId?.trim() || '',
         images: images,
         features: selectedFeatures,
       };
 
+      // Log the data being sent for debugging
+      console.log('Submitting property data:', propertyData);
+
       let result;
       if (isEditMode) {
+        console.log('Updating property with ID:', id);
         result = await propertyService.updateProperty(id, propertyData);
       } else {
+        console.log('Creating new property');
         result = await propertyService.createProperty(propertyData);
       }
 
-      if (result.error) throw result.error;
+      if (result.error) {
+        console.error('Property service error:', result.error);
+        throw result.error;
+      }
 
       // Redirect to admin dashboard
       navigate("/admin/dashboard");
@@ -181,104 +213,402 @@ const PropertyForm = () => {
 
   if (loading && isEditMode) {
     return (
-      <div className="container mx-auto p-6 text-center" data-oid="bxud9vk">
+      <div className="container mx-auto p-6 text-center">
         Loading property data...
       </div>
     );
   }
 
+
+  //   <div className="container mx-auto p-6">
+  //     <h1 className="text-3xl font-bold mb-6">
+  //       {isEditMode ? "Edit Property" : "Add New Property"}
+  //     </h1>
+
+  //     {error && (
+  //       <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+  //         {error}
+  //       </div>
+  //     )}
+
+  //     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+  //       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  //         {/* Basic Information */}
+  //         <div className="space-y-4">
+  //           <h2 className="text-xl font-semibold">Basic Information</h2>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Title *
+  //             </label>
+  //             <input
+  //               type="text"
+  //               {...register("title", { required: "Title is required" })}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             />
+
+  //             {errors.title && (
+  //               <p className="mt-1 text-sm text-red-600">
+  //                 {errors.title.message}
+  //               </p>
+  //             )}
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Location *
+  //             </label>
+  //             <input
+  //               type="text"
+  //               {...register("location", { required: "Location is required" })}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             />
+
+  //             {errors.location && (
+  //               <p className="mt-1 text-sm text-red-600">
+  //                 {errors.location.message}
+  //               </p>
+  //             )}
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Neighborhood
+  //             </label>
+  //             <input
+  //               type="text"
+  //               {...register("neighborhood")}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             />
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Price ($) *
+  //             </label>
+  //             <input
+  //               type="number"
+  //               {...register("price", {
+  //                 required: "Price is required",
+  //                 min: { value: 0, message: "Price must be positive" },
+  //               })}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             />
+
+  //             {errors.price && (
+  //               <p className="mt-1 text-sm text-red-600">
+  //                 {errors.price.message}
+  //               </p>
+  //             )}
+  //           </div>
+
+  //           <div className="grid grid-cols-3 gap-4">
+  //             <div>
+  //               <label className="block text-sm font-medium text-gray-700 mb-1">
+  //                 Bedrooms *
+  //               </label>
+  //               <input
+  //                 type="number"
+  //                 {...register("bedrooms", {
+  //                   required: "Required",
+  //                   min: { value: 0, message: "Min 0" },
+  //                 })}
+  //                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //               />
+
+  //               {errors.bedrooms && (
+  //                 <p className="mt-1 text-sm text-red-600">
+  //                   {errors.bedrooms.message}
+  //                 </p>
+  //               )}
+  //             </div>
+
+  //             <div>
+  //               <label className="block text-sm font-medium text-gray-700 mb-1">
+  //                 Bathrooms *
+  //               </label>
+  //               <input
+  //                 type="number"
+  //                 {...register("bathrooms", {
+  //                   required: "Required",
+  //                   min: { value: 0, message: "Min 0" },
+  //                 })}
+  //                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //               />
+
+  //               {errors.bathrooms && (
+  //                 <p className="mt-1 text-sm text-red-600">
+  //                   {errors.bathrooms.message}
+  //                 </p>
+  //               )}
+  //             </div>
+
+  //             <div>
+  //               <label className="block text-sm font-medium text-gray-700 mb-1">
+  //                 Square Feet *
+  //               </label>
+  //               <input
+  //                 type="number"
+  //                 {...register("squareFeet", {
+  //                   required: "Required",
+  //                   min: { value: 0, message: "Min 0" },
+  //                 })}
+  //                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //               />
+
+  //               {errors.squareFeet && (
+  //                 <p className="mt-1 text-sm text-red-600">
+  //                   {errors.squareFeet.message}
+  //                 </p>
+  //               )}
+  //             </div>
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Property Type *
+  //             </label>
+  //             <select
+  //               {...register("propertyTypeId", {
+  //                 required: "Property type is required",
+  //               })}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             >
+  //               <option value="">Select a property type</option>
+  //               {propertyTypes.map((type) => (
+  //                 <option key={type.id} value={type.id}>
+  //                   {type.name}
+  //                 </option>
+  //               ))}
+  //             </select>
+  //             {errors.propertyTypeId && (
+  //               <p className="mt-1 text-sm text-red-600">
+  //                 {errors.propertyTypeId.message}
+  //               </p>
+  //             )}
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Sale Type *
+  //             </label>
+  //             <select
+  //               {...register("saleTypeId", {
+  //                 required: "Sale type is required",
+  //               })}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             >
+  //               <option value="">Select a sale type</option>
+  //               {saleTypes.map((type) => (
+  //                 <option key={type.id} value={type.id}>
+  //                   {type.name}
+  //                 </option>
+  //               ))}
+  //             </select>
+  //             {errors.saleTypeId && (
+  //               <p className="mt-1 text-sm text-red-600">
+  //                 {errors.saleTypeId.message}
+  //               </p>
+  //             )}
+  //           </div>
+  //         </div>
+
+  //         {/* Additional Information */}
+  //         <div className="space-y-4">
+  //           <h2 className="text-xl font-semibold">Additional Information</h2>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Description
+  //             </label>
+  //             <textarea
+  //               {...register("description")}
+  //               rows="4"
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             ></textarea>
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Floor Plan URL
+  //             </label>
+  //             <input
+  //               type="text"
+  //               {...register("floorPlanUrl")}
+  //               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //             />
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Features
+  //             </label>
+  //             <div className="grid grid-cols-2 gap-2">
+  //               {features.map((feature) => (
+  //                 <div key={feature.id} className="flex items-center">
+  //                   <input
+  //                     type="checkbox"
+  //                     id={`feature-${feature.id}`}
+  //                     checked={selectedFeatures.includes(feature.id)}
+  //                     onChange={() => handleFeatureToggle(feature.id)}
+  //                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+  //                   />
+
+  //                   <label
+  //                     htmlFor={`feature-${feature.id}`}
+  //                     className="ml-2 text-sm text-gray-700"
+  //                   >
+  //                     {feature.name}
+  //                   </label>
+  //                 </div>
+  //               ))}
+  //             </div>
+  //           </div>
+
+  //           <div>
+  //             <label className="block text-sm font-medium text-gray-700 mb-1">
+  //               Images
+  //             </label>
+  //             <div className="flex space-x-2 mb-2">
+  //               <input
+  //                 type="text"
+  //                 value={newImageUrl}
+  //                 onChange={(e) => setNewImageUrl(e.target.value)}
+  //                 placeholder="Enter image URL"
+  //                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+  //               />
+
+  //               <button
+  //                 type="button"
+  //                 onClick={handleAddImage}
+  //                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+  //               >
+  //                 Add
+  //               </button>
+  //             </div>
+
+  //             {images.length > 0 ? (
+  //               <div className="grid grid-cols-2 gap-4">
+  //                 {images.map((image, index) => (
+  //                   <div key={index} className="relative">
+  //                     <img
+  //                       src={image.url}
+  //                       alt={`Property ${index + 1}`}
+  //                       className="w-full h-32 object-cover rounded-md"
+  //                       onError={(e) => {
+  //                         e.target.onerror = null;
+  //                         e.target.src =
+  //                           "https://via.placeholder.com/150?text=Image+Error";
+  //                       }}
+  //                     />
+
+  //                     <button
+  //                       type="button"
+  //                       onClick={() => handleRemoveImage(index)}
+  //                       className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 focus:outline-none"
+  //                     >
+  //                       ×
+  //                     </button>
+  //                   </div>
+  //                 ))}
+  //               </div>
+  //             ) : (
+  //               <p className="text-sm text-gray-500">No images added yet.</p>
+  //             )}
+  //           </div>
+  //         </div>
+  //       </div>
+
+  //       <div className="flex justify-end space-x-4">
+  //         <button
+  //           type="button"
+  //           onClick={() => navigate("/admin/dashboard")}
+  //           className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+  //         >
+  //           Cancel
+  //         </button>
+  //         <button
+  //           type="submit"
+  //           disabled={loading}
+  //           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+  //         >
+  //           {loading
+  //             ? "Saving..."
+  //             : isEditMode
+  //               ? "Update Property"
+  //               : "Create Property"}
+  //         </button>
+  //       </div>
+  //     </form>
+  //   </div>
+  // );
   return (
-    <div className="container mx-auto p-6" data-oid=".68lknm">
-      <h1 className="text-3xl font-bold mb-6" data-oid="x0ucs6j">
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6 text-gray-900">
         {isEditMode ? "Edit Property" : "Add New Property"}
       </h1>
 
       {error && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
-          data-oid="alwd98u"
-        >
+        <div className="bg-red-50 border-2 border-red-300 text-red-800 px-4 py-3 rounded-lg mb-4 shadow-sm">
           {error}
         </div>
       )}
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6"
-        data-oid="zgy7v87"
-      >
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          data-oid="-2sm12p"
-        >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Basic Information */}
-          <div className="space-y-4" data-oid="8kj:f8l">
-            <h2 className="text-xl font-semibold" data-oid="0fsm:8y">
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-900 border-b-2 border-gray-200 pb-2">
               Basic Information
             </h2>
 
-            <div data-oid="tbg5g-x">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="79e092t"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Title *
               </label>
               <input
                 type="text"
                 {...register("title", { required: "Title is required" })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="y9:m0.a"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               />
 
               {errors.title && (
-                <p className="mt-1 text-sm text-red-600" data-oid="dp-yoao">
+                <p className="mt-2 text-sm text-red-700 font-medium">
                   {errors.title.message}
                 </p>
               )}
             </div>
 
-            <div data-oid="00jq0.u">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid=".hceyc_"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Location *
               </label>
               <input
                 type="text"
                 {...register("location", { required: "Location is required" })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="fgsjvw3"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               />
 
               {errors.location && (
-                <p className="mt-1 text-sm text-red-600" data-oid="eqaa_:p">
+                <p className="mt-2 text-sm text-red-700 font-medium">
                   {errors.location.message}
                 </p>
               )}
             </div>
 
-            <div data-oid="y7xayhd">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="qgfdod9"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Neighborhood
               </label>
               <input
                 type="text"
                 {...register("neighborhood")}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="wlqw:nb"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               />
             </div>
 
-            <div data-oid="_9l8tbh">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="ldh4ow3"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Price ($) *
               </label>
               <input
@@ -287,23 +617,19 @@ const PropertyForm = () => {
                   required: "Price is required",
                   min: { value: 0, message: "Price must be positive" },
                 })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="w1fkzbj"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               />
 
               {errors.price && (
-                <p className="mt-1 text-sm text-red-600" data-oid="yk55jxk">
+                <p className="mt-2 text-sm text-red-700 font-medium">
                   {errors.price.message}
                 </p>
               )}
             </div>
 
-            <div className="grid grid-cols-3 gap-4" data-oid="sk8f1gr">
-              <div data-oid="1s049:m">
-                <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                  data-oid="ddv3:6r"
-                >
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-800 mb-2">
                   Bedrooms *
                 </label>
                 <input
@@ -312,22 +638,18 @@ const PropertyForm = () => {
                     required: "Required",
                     min: { value: 0, message: "Min 0" },
                   })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  data-oid="ib5rxf."
+                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
                 />
 
                 {errors.bedrooms && (
-                  <p className="mt-1 text-sm text-red-600" data-oid="lm6obo_">
+                  <p className="mt-2 text-sm text-red-700 font-medium">
                     {errors.bedrooms.message}
                   </p>
                 )}
               </div>
 
-              <div data-oid="8-kdnyk">
-                <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                  data-oid="po_4kem"
-                >
+              <div>
+                <label className="block text-sm font-semibold text-gray-800 mb-2">
                   Bathrooms *
                 </label>
                 <input
@@ -336,22 +658,18 @@ const PropertyForm = () => {
                     required: "Required",
                     min: { value: 0, message: "Min 0" },
                   })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  data-oid="0g3fh9z"
+                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
                 />
 
                 {errors.bathrooms && (
-                  <p className="mt-1 text-sm text-red-600" data-oid="ttemgnv">
+                  <p className="mt-2 text-sm text-red-700 font-medium">
                     {errors.bathrooms.message}
                   </p>
                 )}
               </div>
 
-              <div data-oid="k14ejm2">
-                <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                  data-oid="jzku.36"
-                >
+              <div>
+                <label className="block text-sm font-semibold text-gray-800 mb-2">
                   Square Feet *
                 </label>
                 <input
@@ -360,73 +678,72 @@ const PropertyForm = () => {
                     required: "Required",
                     min: { value: 0, message: "Min 0" },
                   })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  data-oid=":6mc35j"
+                  className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
                 />
 
                 {errors.squareFeet && (
-                  <p className="mt-1 text-sm text-red-600" data-oid="iq99jv7">
+                  <p className="mt-2 text-sm text-red-700 font-medium">
                     {errors.squareFeet.message}
                   </p>
                 )}
               </div>
             </div>
 
-            <div data-oid="o4t5vq6">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="824hhd_"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Property Type *
               </label>
               <select
                 {...register("propertyTypeId", {
                   required: "Property type is required",
                 })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="kvh4y7o"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               >
-                <option value="" data-oid="-vpu5q1">
+                <option value="" className="text-gray-500">
                   Select a property type
                 </option>
                 {propertyTypes.map((type) => (
-                  <option key={type.id} value={type.id} data-oid="ps_ivyi">
+                  <option
+                    key={type.id}
+                    value={type.id}
+                    className="text-gray-900"
+                  >
                     {type.name}
                   </option>
                 ))}
               </select>
               {errors.propertyTypeId && (
-                <p className="mt-1 text-sm text-red-600" data-oid="908v0h-">
+                <p className="mt-2 text-sm text-red-700 font-medium">
                   {errors.propertyTypeId.message}
                 </p>
               )}
             </div>
 
-            <div data-oid=".alj_nv">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="ey8x6n."
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Sale Type *
               </label>
               <select
                 {...register("saleTypeId", {
                   required: "Sale type is required",
                 })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="nzt_0a-"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               >
-                <option value="" data-oid="p-k3t0m">
+                <option value="" className="text-gray-500">
                   Select a sale type
                 </option>
                 {saleTypes.map((type) => (
-                  <option key={type.id} value={type.id} data-oid="wqp7g.8">
+                  <option
+                    key={type.id}
+                    value={type.id}
+                    className="text-gray-900"
+                  >
                     {type.name}
                   </option>
                 ))}
               </select>
               {errors.saleTypeId && (
-                <p className="mt-1 text-sm text-red-600" data-oid="3j471w7">
+                <p className="mt-2 text-sm text-red-700 font-medium">
                   {errors.saleTypeId.message}
                 </p>
               )}
@@ -434,68 +751,54 @@ const PropertyForm = () => {
           </div>
 
           {/* Additional Information */}
-          <div className="space-y-4" data-oid="brnosjn">
-            <h2 className="text-xl font-semibold" data-oid="md6a:pq">
+          <div className="space-y-6">
+            <h2 className="text-xl font-semibold text-gray-900 border-b-2 border-gray-200 pb-2">
               Additional Information
             </h2>
 
-            <div data-oid="g.62e74">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="_69o76u"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Description
               </label>
               <textarea
                 {...register("description")}
                 rows="4"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="zvdets_"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm resize-vertical"
               ></textarea>
             </div>
 
-            <div data-oid="cu1b6kf">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="v2ir70b"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-2">
                 Floor Plan URL
               </label>
               <input
                 type="text"
                 {...register("floorPlanUrl")}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                data-oid="w7ik.nr"
+                className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               />
             </div>
 
-            <div data-oid="c0vhxbk">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="9sqn4m4"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-3">
                 Features
               </label>
-              <div className="grid grid-cols-2 gap-2" data-oid="dqcu6b4">
+              <div className="grid grid-cols-2 gap-3">
                 {features.map((feature) => (
                   <div
                     key={feature.id}
-                    className="flex items-center"
-                    data-oid="9j8e.lj"
+                    className="flex items-center bg-gray-50 p-2 rounded-lg"
                   >
                     <input
                       type="checkbox"
                       id={`feature-${feature.id}`}
                       checked={selectedFeatures.includes(feature.id)}
                       onChange={() => handleFeatureToggle(feature.id)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      data-oid="n7zqdex"
+                      className="h-5 w-5 text-blue-600 bg-white border-2 border-gray-400 rounded focus:ring-3 focus:ring-blue-500 focus:ring-offset-0"
                     />
 
                     <label
                       htmlFor={`feature-${feature.id}`}
-                      className="ml-2 text-sm text-gray-700"
-                      data-oid="wjbyi33"
+                      className="ml-3 text-sm text-gray-800 font-medium cursor-pointer"
                     >
                       {feature.name}
                     </label>
@@ -504,54 +807,50 @@ const PropertyForm = () => {
               </div>
             </div>
 
-            <div data-oid="6ivyilh">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                data-oid="-3mhrxo"
-              >
+            <div>
+              <label className="block text-sm font-semibold text-gray-800 mb-3">
                 Images
               </label>
-              <div className="flex space-x-2 mb-2" data-oid="3p_ubu3">
+              <div className="flex space-x-3 mb-4">
                 <input
                   type="text"
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
                   placeholder="Enter image URL"
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  data-oid="9ez1mwl"
+                  className="flex-1 px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
                 />
 
                 <button
                   type="button"
                   onClick={handleAddImage}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                  data-oid="2x:wdbm"
+                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-sm"
                 >
                   Add
                 </button>
               </div>
 
               {images.length > 0 ? (
-                <div className="grid grid-cols-2 gap-4" data-oid="y0bi-ec">
+                <div className="grid grid-cols-2 gap-4">
                   {images.map((image, index) => (
-                    <div key={index} className="relative" data-oid="xb12dc3">
+                    <div
+                      key={index}
+                      className="relative rounded-lg overflow-hidden shadow-md"
+                    >
                       <img
                         src={image.url}
                         alt={`Property ${index + 1}`}
-                        className="w-full h-32 object-cover rounded-md"
+                        className="w-full h-32 object-cover"
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src =
                             "https://via.placeholder.com/150?text=Image+Error";
                         }}
-                        data-oid="5gywdj7"
                       />
 
                       <button
                         type="button"
                         onClick={() => handleRemoveImage(index)}
-                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 focus:outline-none"
-                        data-oid="0mg1xdh"
+                        className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-1 font-bold text-lg transition-all duration-200 shadow-md"
                       >
                         ×
                       </button>
@@ -559,7 +858,7 @@ const PropertyForm = () => {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500" data-oid="1a8:s1q">
+                <p className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-200">
                   No images added yet.
                 </p>
               )}
@@ -567,26 +866,24 @@ const PropertyForm = () => {
           </div>
         </div>
 
-        <div className="flex justify-end space-x-4" data-oid="vnx5o-5">
+        <div className="flex justify-end space-x-4 pt-6 border-t-2 border-gray-200">
           <button
             type="button"
             onClick={() => navigate("/admin/dashboard")}
-            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            data-oid="to02lur"
+            className="px-6 py-3 border-2 border-gray-400 rounded-lg text-gray-800 font-semibold bg-white hover:bg-gray-50 focus:outline-none focus:ring-3 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200 shadow-sm"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
-            data-oid="j6vvdr8"
+            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
           >
             {loading
               ? "Saving..."
               : isEditMode
-                ? "Update Property"
-                : "Create Property"}
+              ? "Update Property"
+              : "Create Property"}
           </button>
         </div>
       </form>

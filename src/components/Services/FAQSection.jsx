@@ -54,31 +54,24 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-16 bg-white dark:bg-brown-dark" data-oid="xxtt3h2">
-      <div className="container mx-auto px-4" data-oid="zt2rnd3">
+    <section className="py-16 bg-white dark:bg-brown-dark">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
-          data-oid="pj9_r3b"
         >
-          <h2
-            className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-            data-oid="bwnd0ho"
-          >
+          <h2 className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
             Frequently Asked Questions
           </h2>
-          <p
-            className="max-w-2xl mx-auto text-brown dark:text-beige-medium"
-            data-oid="6dzs0kw"
-          >
+          <p className="max-w-2xl mx-auto text-brown dark:text-beige-medium">
             Find answers to common questions about our services and processes.
           </p>
         </motion.div>
 
-        <div className="max-w-3xl mx-auto" data-oid="74p8c3j">
+        <div className="max-w-3xl mx-auto">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -87,7 +80,6 @@ const FAQSection = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
               className="mb-4"
-              data-oid=".e9w7lc"
             >
               <button
                 onClick={() => toggleFAQ(index)}
@@ -97,20 +89,18 @@ const FAQSection = () => {
                     : "bg-beige-light dark:bg-brown hover:bg-beige-medium dark:hover:bg-brown-dark text-brown-dark dark:text-beige-light"
                 }`}
                 aria-expanded={openIndex === index}
-                data-oid="3mas:l0"
               >
-                <span className="font-heading font-semibold" data-oid="_gbc:i-">
+                <span className="font-heading font-semibold">
                   {faq.question}
                 </span>
                 <ChevronDownIcon
                   className={`h-5 w-5 transition-transform ${
                     openIndex === index ? "transform rotate-180" : ""
                   }`}
-                  data-oid="nv35j3j"
                 />
               </button>
 
-              <AnimatePresence data-oid=":ulvml2">
+              <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
@@ -118,16 +108,9 @@ const FAQSection = () => {
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
-                    data-oid="21im8hj"
                   >
-                    <div
-                      className="p-5 bg-white dark:bg-brown-dark border border-beige-medium dark:border-brown rounded-b-lg"
-                      data-oid="j9m4qrj"
-                    >
-                      <p
-                        className="text-brown dark:text-beige-medium"
-                        data-oid="wg2nxc1"
-                      >
+                    <div className="p-5 bg-white dark:bg-brown-dark border border-beige-medium dark:border-brown rounded-b-lg">
+                      <p className="text-brown dark:text-beige-medium">
                         {faq.answer}
                       </p>
                     </div>

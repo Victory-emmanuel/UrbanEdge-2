@@ -9,21 +9,20 @@ import CTASection from "../components/Services/CTASection";
 const ServicesPage = () => {
   return (
     <>
-      <Helmet data-oid="pra223x">
-        <title data-oid="0-yibml">Our Services | UrbanEdge Real Estate</title>
+      <Helmet>
+        <title>Our Services | UrbanEdge Real Estate</title>
         <meta
           name="description"
           content="Discover UrbanEdge Real Estate's comprehensive services including buying, selling, property management, investment advisory, and development services."
-          data-oid="j7943bw"
         />
       </Helmet>
 
-      <HeroSection data-oid="tz1y096" />
-      <ServicesGrid data-oid="1dd2fwx" />
-      <ProcessSection data-oid="e7--18i" />
-      <TestimonialsSection data-oid="abnyr_r" />
-      <FAQSection data-oid="xxd3:gy" />
-      <CTASection data-oid="ubd1qv1" />
+      <HeroSection />
+      <ServicesGrid />
+      <ProcessSection />
+      <TestimonialsSection />
+      <FAQSection />
+      <CTASection />
     </>
   );
 };

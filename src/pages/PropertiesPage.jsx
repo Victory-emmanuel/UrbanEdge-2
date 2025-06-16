@@ -195,105 +195,80 @@ const PropertiesPage = () => {
 
   return (
     <>
-      <Helmet data-oid=".__v1_k">
-        <title data-oid="0etv788">Properties | UrbanEdge Real Estate</title>
+      <Helmet>
+        <title>Properties | UrbanEdge Real Estate</title>
         <meta
           name="description"
           content="Browse our exclusive collection of luxury properties, homes, and investment opportunities. Find your perfect property with UrbanEdge Real Estate."
-          data-oid="hhf7.hm"
         />
       </Helmet>
 
-      <div className="py-12 bg-beige-light dark:bg-brown" data-oid="3panztz">
-        <div className="container mx-auto px-4" data-oid="7xi4c.t">
+      <div className="py-12 bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4">
           <SectionHeading
             title="Explore Our Properties"
             subtitle="Discover exceptional properties in prime locations, from luxury homes to high-potential investment opportunities."
             centered
-            data-oid=":-kb14g"
           />
 
-          <div
-            className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6"
-            data-oid="u6sjrgt"
-          >
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Filters - Left Sidebar on Desktop */}
-            <div className="lg:col-span-3" data-oid="gcebq30">
+            <div className="lg:col-span-3">
               <PropertyFilters
                 onFilterChange={handleFilterChange}
                 initialFilters={filters}
                 filterOptions={filterOptions}
-                data-oid="_mared0"
               />
             </div>
 
             {/* Main Content */}
-            <div className="lg:col-span-9" data-oid="qc_r0b:">
+            <div className="lg:col-span-9">
               {/* Controls */}
-              <div
-                className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"
-                data-oid="zqzk3ep"
-              >
-                <div className="flex items-center" data-oid="q3i32-u">
-                  <span
-                    className="text-brown-dark dark:text-beige-light mr-2"
-                    data-oid=":l6430k"
-                  >
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div className="flex items-center">
+                  <span className="text-brown-dark dark:text-beige-light mr-2">
                     {pagination.totalCount} properties found
                   </span>
                 </div>
 
-                <div
-                  className="flex items-center gap-4 w-full sm:w-auto"
-                  data-oid="iib2bpv"
-                >
+                <div className="flex items-center gap-4 w-full sm:w-auto">
                   <PropertySort
                     onSortChange={handleSortChange}
                     initialSort={sortBy}
-                    data-oid="vvgap36"
                   />
 
                   <PropertyToggleView
                     view={view}
                     onViewChange={handleViewChange}
-                    data-oid="4twa6gj"
                   />
                 </div>
               </div>
 
               {/* Error Message */}
               {error && (
-                <div
-                  className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6"
-                  data-oid="t_22n4c"
-                >
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
                   {error}
                 </div>
               )}
 
               {/* Properties Display */}
-              <div className="min-h-[500px]" data-oid="8p80mk.">
+              <div className="min-h-[500px]">
                 {view === "grid" ? (
-                  <PropertyGrid
-                    properties={properties}
-                    loading={loading}
-                    data-oid="6p_ta3l"
-                  />
+                  <PropertyGrid properties={properties} loading={loading} />
                 ) : (
-                  <div className="h-[700px]" data-oid="mt6xmpg">
-                    <PropertyMap properties={properties} data-oid="cfhijt8" />
+                  <div className="h-[700px]">
+                    <PropertyMap properties={properties} />
                   </div>
                 )}
               </div>
 
               {/* Pagination */}
               {!loading && pagination.totalPages > 1 && (
-                <div className="mt-8 flex justify-center" data-oid="k3btwcj">
+                <div className="mt-8 flex justify-center">
                   <Pagination
                     currentPage={pagination.currentPage}
                     totalPages={pagination.totalPages}
                     onPageChange={handlePageChange}
-                    data-oid="fman4i7"
                   />
                 </div>
               )}

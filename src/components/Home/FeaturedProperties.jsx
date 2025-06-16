@@ -91,21 +91,17 @@ const FeaturedProperties = () => {
   };
 
   return (
-    <section className="py-16 bg-beige-light dark:bg-brown" data-oid="ulyb.4w">
-      <div className="container mx-auto px-4" data-oid="43lhjr_">
+    <section className="py-16 bg-beige-light dark:bg-brown">
+      <div className="container mx-auto px-4">
         <SectionHeading
           title="Featured Properties"
           subtitle="Explore our handpicked selection of premium properties that represent the finest in luxury living and investment opportunities."
           centered
-          data-oid="c0i:gin"
         />
 
-        <div className="relative" data-oid="2kxoxg4">
+        <div className="relative">
           {/* Scroll Controls */}
-          <div
-            className="absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block"
-            data-oid="6y2.e47"
-          >
+          <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block">
             <button
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
@@ -115,16 +111,12 @@ const FeaturedProperties = () => {
                   : "opacity-50 cursor-not-allowed text-brown/50 dark:text-beige-light/50"
               }`}
               aria-label="Scroll left"
-              data-oid="uwm7q2l"
             >
-              <ChevronLeftIcon className="h-6 w-6" data-oid="snglfos" />
+              <ChevronLeftIcon className="h-6 w-6" />
             </button>
           </div>
 
-          <div
-            className="absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block"
-            data-oid="717t3hf"
-          >
+          <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block">
             <button
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
@@ -134,9 +126,8 @@ const FeaturedProperties = () => {
                   : "opacity-50 cursor-not-allowed text-brown/50 dark:text-beige-light/50"
               }`}
               aria-label="Scroll right"
-              data-oid="q5a6k:q"
             >
-              <ChevronRightIcon className="h-6 w-6" data-oid="ndn1:q0" />
+              <ChevronRightIcon className="h-6 w-6" />
             </button>
           </div>
 
@@ -145,7 +136,6 @@ const FeaturedProperties = () => {
             ref={scrollContainerRef}
             className="flex overflow-x-auto pb-6 -mx-2 xs:-mx-4 px-2 xs:px-4 scrollbar-hide"
             onScroll={checkScrollability}
-            data-oid="wzjd5ac"
           >
             {featuredProperties.map((property) => (
               <motion.div
@@ -155,17 +145,16 @@ const FeaturedProperties = () => {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.5 }}
                 className="min-w-[260px] xs:min-w-[300px] sm:min-w-[350px] md:min-w-[400px] flex-shrink-0 px-2 xs:px-4"
-                data-oid="cls5m1x"
               >
-                <PropertyCard property={property} data-oid="xnebipn" />
+                <PropertyCard property={property} />
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* View All Button */}
-        <div className="text-center mt-10" data-oid="xj_mxnj">
-          <a href="/properties" className="btn-outline" data-oid="vtv80sl">
+        <div className="text-center mt-10">
+          <a href="/properties" className="btn-outline">
             View All Properties
           </a>
         </div>

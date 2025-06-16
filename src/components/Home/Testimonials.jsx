@@ -93,21 +93,17 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="py-16 bg-white dark:bg-brown-dark" data-oid="mbfqvpc">
-      <div className="container mx-auto px-4" data-oid="mes.apa">
+    <section className="py-16 bg-white dark:bg-brown-dark">
+      <div className="container mx-auto px-4">
         <SectionHeading
           title="What Our Clients Say"
           subtitle="Don't just take our word for it. Hear from clients who found their perfect property with UrbanEdge."
           centered
-          data-oid=":q1qmgi"
         />
 
-        <div className="relative mt-12" data-oid="_h-xh8z">
+        <div className="relative mt-12">
           {/* Navigation Buttons */}
-          <div
-            className="absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block"
-            data-oid="ctm_l_c"
-          >
+          <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block">
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
@@ -117,19 +113,12 @@ const Testimonials = () => {
                   : "hover:bg-beige-medium dark:hover:bg-brown-dark"
               }`}
               aria-label="Previous testimonial"
-              data-oid="7x.dl1n"
             >
-              <ChevronLeftIcon
-                className="h-6 w-6 text-brown-dark dark:text-beige-light"
-                data-oid="iu6nh-h"
-              />
+              <ChevronLeftIcon className="h-6 w-6 text-brown-dark dark:text-beige-light" />
             </button>
           </div>
 
-          <div
-            className="absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block"
-            data-oid="j_p1fk3"
-          >
+          <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block">
             <button
               onClick={handleNext}
               disabled={currentIndex >= maxIndex}
@@ -139,48 +128,32 @@ const Testimonials = () => {
                   : "hover:bg-beige-medium dark:hover:bg-brown-dark"
               }`}
               aria-label="Next testimonial"
-              data-oid="uehkxsu"
             >
-              <ChevronRightIcon
-                className="h-6 w-6 text-brown-dark dark:text-beige-light"
-                data-oid="m7fs2jc"
-              />
+              <ChevronRightIcon className="h-6 w-6 text-brown-dark dark:text-beige-light" />
             </button>
           </div>
 
           {/* Testimonials Container */}
-          <div
-            ref={containerRef}
-            className="overflow-hidden"
-            data-oid="w6zv45g"
-          >
+          <div ref={containerRef} className="overflow-hidden">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
                 transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
               }}
-              data-oid="w2-i89y"
             >
               {testimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
                   className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 p-2 xs:p-3 sm:p-4"
-                  data-oid="gy8j166"
                 >
-                  <TestimonialCard
-                    testimonial={testimonial}
-                    data-oid="czeiws9"
-                  />
+                  <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}
             </div>
           </div>
 
           {/* Mobile Navigation Dots */}
-          <div
-            className="flex justify-center mt-8 md:hidden"
-            data-oid="hgyrhq0"
-          >
+          <div className="flex justify-center mt-8 md:hidden">
             {Array.from({ length: testimonials.length - visibleCount + 1 }).map(
               (_, index) => (
                 <button
@@ -192,7 +165,6 @@ const Testimonials = () => {
                       : "bg-beige-medium dark:bg-brown"
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
-                  data-oid="2n4o.n1"
                 />
               ),
             )}
@@ -200,8 +172,8 @@ const Testimonials = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-12" data-oid="ep.t7p_">
-          <a href="/testimonials" className="btn-outline" data-oid="-zf-wio">
+        <div className="text-center mt-12">
+          <a href="/testimonials" className="btn-outline">
             Read More Success Stories
           </a>
         </div>

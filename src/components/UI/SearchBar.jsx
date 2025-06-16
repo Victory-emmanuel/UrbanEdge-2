@@ -35,19 +35,14 @@ const SearchBar = ({ className = "" }) => {
   return (
     <div
       className={`bg-white dark:bg-brown-dark rounded-lg shadow-lg p-4 md:p-6 ${className}`}
-      data-oid="sn405c1"
     >
-      <form onSubmit={handleSubmit} data-oid="etaazjw">
-        <div
-          className="grid grid-cols-1 md:grid-cols-4 gap-4"
-          data-oid="pht20_6"
-        >
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Location */}
-          <div className="md:col-span-1" data-oid="zcw4xw_">
+          <div className="md:col-span-1">
             <label
               htmlFor="location"
               className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid="-rioupd"
             >
               Location
             </label>
@@ -58,20 +53,18 @@ const SearchBar = ({ className = "" }) => {
               className="input"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              data-oid="q5cu2ku"
             />
           </div>
 
           {/* Price Range */}
-          <div className="md:col-span-1" data-oid="-gvh.:x">
+          <div className="md:col-span-1">
             <label
               htmlFor="price-range"
               className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid="-ydqrf0"
             >
               Price Range
             </label>
-            <div className="flex items-center space-x-2" data-oid="c2hxapm">
+            <div className="flex items-center space-x-2">
               <input
                 type="number"
                 placeholder="Min"
@@ -82,15 +75,9 @@ const SearchBar = ({ className = "" }) => {
                 onChange={(e) =>
                   setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])
                 }
-                data-oid="bfg2ydm"
               />
 
-              <span
-                className="text-brown-dark dark:text-beige-light"
-                data-oid="_u6:syw"
-              >
-                -
-              </span>
+              <span className="text-brown-dark dark:text-beige-light">-</span>
               <input
                 type="number"
                 placeholder="Max"
@@ -103,17 +90,15 @@ const SearchBar = ({ className = "" }) => {
                     parseInt(e.target.value) || 5000000,
                   ])
                 }
-                data-oid="-ctsbxt"
               />
             </div>
           </div>
 
           {/* Property Type */}
-          <div className="md:col-span-1" data-oid="j2pind7">
+          <div className="md:col-span-1">
             <label
               htmlFor="property-type"
               className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid="a-qa9j_"
             >
               Property Type
             </label>
@@ -122,10 +107,9 @@ const SearchBar = ({ className = "" }) => {
               className="input"
               value={propertyType}
               onChange={(e) => setPropertyType(e.target.value)}
-              data-oid="uc-bexy"
             >
               {propertyTypes.map((type) => (
-                <option key={type.value} value={type.value} data-oid="yg2xz14">
+                <option key={type.value} value={type.value}>
                   {type.label}
                 </option>
               ))}
@@ -133,16 +117,12 @@ const SearchBar = ({ className = "" }) => {
           </div>
 
           {/* Search Button */}
-          <div className="md:col-span-1 flex items-end" data-oid="drh5c3v">
+          <div className="md:col-span-1 flex items-end">
             <button
               type="submit"
               className="btn-primary w-full flex items-center justify-center"
-              data-oid="l_zn.z5"
             >
-              <MagnifyingGlassIcon
-                className="h-5 w-5 mr-2"
-                data-oid="ih-lgcu"
-              />
+              <MagnifyingGlassIcon className="h-5 w-5 mr-2" />
               Search
             </button>
           </div>

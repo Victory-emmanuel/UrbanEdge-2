@@ -164,39 +164,25 @@ const TeamSection = () => {
   };
 
   return (
-    <section
-      id="team"
-      className="py-16 bg-white dark:bg-brown-dark"
-      data-oid="_c:1oya"
-    >
-      <div className="container mx-auto px-4" data-oid="ovunbpp">
+    <section id="team" className="py-16 bg-white dark:bg-brown-dark">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
-          data-oid="fnam-0i"
         >
-          <h2
-            className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-            data-oid="3e-ctkm"
-          >
+          <h2 className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
             Meet Our Team
           </h2>
-          <p
-            className="max-w-2xl mx-auto text-brown dark:text-beige-medium"
-            data-oid="0yjyvkt"
-          >
+          <p className="max-w-2xl mx-auto text-brown dark:text-beige-medium">
             Our experienced professionals are dedicated to providing exceptional
             service and expertise in every aspect of real estate.
           </p>
         </motion.div>
 
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-          data-oid="_s.w--_"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.id}
@@ -206,45 +192,30 @@ const TeamSection = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group cursor-pointer"
               onClick={() => openModal(member)}
-              data-oid="qe1i2qk"
             >
-              <div
-                className="relative overflow-hidden rounded-lg mb-4"
-                data-oid="t63vxve"
-              >
+              <div className="relative overflow-hidden rounded-lg mb-4">
                 <img
                   src={member.photo}
                   alt={member.name}
                   className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
-                  data-oid="akanqkp"
                 />
 
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-brown-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end"
-                  data-oid="wwig_0l"
-                >
-                  <div className="p-4 text-white" data-oid="ommscxb">
-                    <p className="font-medium" data-oid=".qw9jlv">
-                      View Profile
-                    </p>
+                <div className="absolute inset-0 bg-gradient-to-t from-brown-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-4 text-white">
+                    <p className="font-medium">View Profile</p>
                   </div>
                 </div>
               </div>
-              <h3
-                className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light"
-                data-oid="iawkisd"
-              >
+              <h3 className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light">
                 {member.name}
               </h3>
-              <p className="text-taupe" data-oid="orb-swc">
-                {member.role}
-              </p>
+              <p className="text-taupe">{member.role}</p>
             </motion.div>
           ))}
         </div>
 
         {/* Team Member Modal */}
-        <AnimatePresence data-oid="_j3e93h">
+        <AnimatePresence>
           {selectedMember && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -252,7 +223,6 @@ const TeamSection = () => {
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brown-dark/80"
               onClick={closeModal}
-              data-oid="eejbx6e"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -261,112 +231,74 @@ const TeamSection = () => {
                 transition={{ duration: 0.3 }}
                 className="bg-white dark:bg-brown-dark rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
                 onClick={(e) => e.stopPropagation()}
-                data-oid="o9wem.m"
               >
-                <div className="relative" data-oid="k6ddelb">
+                <div className="relative">
                   <button
                     onClick={closeModal}
                     className="absolute top-4 right-4 text-brown-dark dark:text-beige-light hover:text-taupe transition-colors z-10"
                     aria-label="Close modal"
-                    data-oid="o-ozf94"
                   >
-                    <XMarkIcon className="h-6 w-6" data-oid=":jrnrlx" />
+                    <XMarkIcon className="h-6 w-6" />
                   </button>
 
-                  <div
-                    className="grid grid-cols-1 md:grid-cols-2"
-                    data-oid="-mf9rv6"
-                  >
+                  <div className="grid grid-cols-1 md:grid-cols-2">
                     {/* Image */}
-                    <div className="h-64 md:h-auto" data-oid="gdzy2vk">
+                    <div className="h-64 md:h-auto">
                       <img
                         src={selectedMember.photo}
                         alt={selectedMember.name}
                         className="w-full h-full object-cover"
-                        data-oid="la_xgfy"
                       />
                     </div>
 
                     {/* Content */}
-                    <div className="p-6" data-oid="4f:i:wb">
-                      <h3
-                        className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-1"
-                        data-oid="rckbg6u"
-                      >
+                    <div className="p-6">
+                      <h3 className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-1">
                         {selectedMember.name}
                       </h3>
-                      <p className="text-taupe mb-4" data-oid=":2inu3e">
-                        {selectedMember.role}
-                      </p>
+                      <p className="text-taupe mb-4">{selectedMember.role}</p>
 
-                      <div className="mb-4 space-y-2" data-oid="qt40b0w">
-                        <div
-                          className="flex items-center text-brown dark:text-beige-medium"
-                          data-oid=":g3x4kp"
-                        >
-                          <EnvelopeIcon
-                            className="h-5 w-5 mr-2"
-                            data-oid="kj0pr:9"
-                          />
+                      <div className="mb-4 space-y-2">
+                        <div className="flex items-center text-brown dark:text-beige-medium">
+                          <EnvelopeIcon className="h-5 w-5 mr-2" />
 
                           <a
                             href={`mailto:${selectedMember.email}`}
                             className="hover:text-taupe transition-colors"
-                            data-oid="1f_fdtf"
                           >
                             {selectedMember.email}
                           </a>
                         </div>
-                        <div
-                          className="flex items-center text-brown dark:text-beige-medium"
-                          data-oid="w0r2z5a"
-                        >
-                          <PhoneIcon
-                            className="h-5 w-5 mr-2"
-                            data-oid="a-1u8hx"
-                          />
+                        <div className="flex items-center text-brown dark:text-beige-medium">
+                          <PhoneIcon className="h-5 w-5 mr-2" />
 
                           <a
                             href={`tel:${selectedMember.phone}`}
                             className="hover:text-taupe transition-colors"
-                            data-oid="7atlfcw"
                           >
                             {selectedMember.phone}
                           </a>
                         </div>
                       </div>
 
-                      <div className="mb-4" data-oid="01j7qyi">
-                        <h4
-                          className="font-heading font-semibold text-brown-dark dark:text-beige-light mb-2"
-                          data-oid="j23yr33"
-                        >
+                      <div className="mb-4">
+                        <h4 className="font-heading font-semibold text-brown-dark dark:text-beige-light mb-2">
                           Bio
                         </h4>
-                        <p
-                          className="text-brown dark:text-beige-medium"
-                          data-oid="n2iop9d"
-                        >
+                        <p className="text-brown dark:text-beige-medium">
                           {selectedMember.bio}
                         </p>
                       </div>
 
-                      <div data-oid="lqd66wc">
-                        <h4
-                          className="font-heading font-semibold text-brown-dark dark:text-beige-light mb-2"
-                          data-oid="whozlag"
-                        >
+                      <div>
+                        <h4 className="font-heading font-semibold text-brown-dark dark:text-beige-light mb-2">
                           Areas of Expertise
                         </h4>
-                        <div
-                          className="flex flex-wrap gap-2"
-                          data-oid="888-2qd"
-                        >
+                        <div className="flex flex-wrap gap-2">
                           {selectedMember.expertise.map((item, index) => (
                             <span
                               key={index}
                               className="bg-beige-light dark:bg-brown text-brown-dark dark:text-beige-light px-3 py-1 rounded-full text-sm"
-                              data-oid="a:x.3.k"
                             >
                               {item}
                             </span>

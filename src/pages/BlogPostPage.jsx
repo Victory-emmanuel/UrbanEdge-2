@@ -144,40 +144,16 @@ const BlogPostPage = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12" data-oid="pey6:yl">
-        <div className="max-w-4xl mx-auto animate-pulse" data-oid="z8wfr4o">
-          <div
-            className="h-8 bg-beige-medium dark:bg-brown rounded w-3/4 mb-4"
-            data-oid="0-fgoea"
-          ></div>
-          <div
-            className="h-96 bg-beige-medium dark:bg-brown rounded mb-8"
-            data-oid="xuqq:r-"
-          ></div>
-          <div
-            className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"
-            data-oid="i5wwsz."
-          ></div>
-          <div
-            className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"
-            data-oid="dn1bjeo"
-          ></div>
-          <div
-            className="h-4 bg-beige-medium dark:bg-brown rounded w-3/4 mb-8"
-            data-oid="t4h.yl_"
-          ></div>
-          <div
-            className="h-8 bg-beige-medium dark:bg-brown rounded w-1/2 mb-4"
-            data-oid="559y_l9"
-          ></div>
-          <div
-            className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"
-            data-oid="b59ti--"
-          ></div>
-          <div
-            className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"
-            data-oid="4__kg:o"
-          ></div>
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto animate-pulse">
+          <div className="h-8 bg-beige-medium dark:bg-brown rounded w-3/4 mb-4"></div>
+          <div className="h-96 bg-beige-medium dark:bg-brown rounded mb-8"></div>
+          <div className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"></div>
+          <div className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"></div>
+          <div className="h-4 bg-beige-medium dark:bg-brown rounded w-3/4 mb-8"></div>
+          <div className="h-8 bg-beige-medium dark:bg-brown rounded w-1/2 mb-4"></div>
+          <div className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"></div>
+          <div className="h-4 bg-beige-medium dark:bg-brown rounded w-full mb-4"></div>
         </div>
       </div>
     );
@@ -185,23 +161,14 @@ const BlogPostPage = () => {
 
   if (!post) {
     return (
-      <div
-        className="container mx-auto px-4 py-12 text-center"
-        data-oid="evak9:f"
-      >
-        <h2
-          className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-4"
-          data-oid="zh6sdxo"
-        >
+      <div className="container mx-auto px-4 py-12 text-center">
+        <h2 className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-4">
           Article Not Found
         </h2>
-        <p
-          className="text-brown dark:text-beige-medium mb-6"
-          data-oid="6wbyh2j"
-        >
+        <p className="text-brown dark:text-beige-medium mb-6">
           The article you're looking for doesn't exist or has been removed.
         </p>
-        <a href="/blog" className="btn-primary" data-oid="aum:29.">
+        <a href="/blog" className="btn-primary">
           Back to Blog
         </a>
       </div>
@@ -210,23 +177,21 @@ const BlogPostPage = () => {
 
   return (
     <>
-      <Helmet data-oid="i-9m4oi">
-        <title data-oid="6m:hkav">
-          {post.title} | UrbanEdge Real Estate Blog
-        </title>
-        <meta name="description" content={post.excerpt} data-oid=".6nzx37" />
+      <Helmet>
+        <title>{post.title} | UrbanEdge Real Estate Blog</title>
+        <meta name="description" content={post.excerpt} />
       </Helmet>
 
-      <div className="py-12 bg-beige-light dark:bg-brown" data-oid=":-ysvwf">
-        <div className="container mx-auto px-4" data-oid="jdjh6ka">
+      <div className="py-12 bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4">
           {/* Blog Post Content */}
-          <BlogPostContent post={post} data-oid="y76l0fk" />
+          <BlogPostContent post={post} />
 
           {/* Author Bio */}
-          <AuthorBio author={post.author} data-oid="1d_z1s8" />
+          <AuthorBio author={post.author} />
 
           {/* Related Posts */}
-          <RelatedPosts posts={relatedPosts} data-oid="f0n9a4t" />
+          <RelatedPosts posts={relatedPosts} />
         </div>
       </div>
     </>

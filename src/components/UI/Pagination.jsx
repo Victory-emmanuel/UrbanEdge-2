@@ -69,29 +69,25 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="flex items-center justify-center" data-oid="xu.qcv0">
-      <ul className="flex items-center space-x-1" data-oid="gg:ajc-">
+    <nav className="flex items-center justify-center">
+      <ul className="flex items-center space-x-1">
         {/* Previous button */}
-        <li data-oid="d2t7s1j">
+        <li>
           <button
             onClick={handlePrevious}
             disabled={currentPage === 1}
             className={`flex items-center justify-center w-10 h-10 rounded-md ${currentPage === 1 ? "text-gray-400 cursor-not-allowed" : "text-brown-dark dark:text-beige-light hover:bg-beige-medium dark:hover:bg-brown-light"}`}
             aria-label="Previous page"
-            data-oid="tqsnj4d"
           >
-            <ChevronLeftIcon className="w-5 h-5" data-oid="g2tytsv" />
+            <ChevronLeftIcon className="w-5 h-5" />
           </button>
         </li>
 
         {/* Page numbers */}
         {getPageNumbers().map((page, index) => (
-          <li key={index} data-oid="z0-wz.w">
+          <li key={index}>
             {page === "..." ? (
-              <span
-                className="flex items-center justify-center w-10 h-10 text-brown-dark dark:text-beige-light"
-                data-oid="hzzdf0v"
-              >
+              <span className="flex items-center justify-center w-10 h-10 text-brown-dark dark:text-beige-light">
                 ...
               </span>
             ) : (
@@ -100,7 +96,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 className={`flex items-center justify-center w-10 h-10 rounded-md ${currentPage === page ? "bg-taupe text-white" : "text-brown-dark dark:text-beige-light hover:bg-beige-medium dark:hover:bg-brown-light"}`}
                 aria-current={currentPage === page ? "page" : undefined}
                 aria-label={`Page ${page}`}
-                data-oid="c4n9oct"
               >
                 {page}
               </button>
@@ -109,15 +104,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ))}
 
         {/* Next button */}
-        <li data-oid="y5alcz3">
+        <li>
           <button
             onClick={handleNext}
             disabled={currentPage === totalPages}
             className={`flex items-center justify-center w-10 h-10 rounded-md ${currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "text-brown-dark dark:text-beige-light hover:bg-beige-medium dark:hover:bg-brown-light"}`}
             aria-label="Next page"
-            data-oid="ekmwzyg"
           >
-            <ChevronRightIcon className="w-5 h-5" data-oid="h.0:w2g" />
+            <ChevronRightIcon className="w-5 h-5" />
           </button>
         </li>
       </ul>

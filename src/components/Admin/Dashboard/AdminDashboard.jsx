@@ -97,49 +97,40 @@ const AdminDashboard = () => {
 
   if (!user) {
     return (
-      <div className="p-8 text-center" data-oid="6diq4r9">
-        Please log in to access this page.
-      </div>
+      <div className="p-8 text-center">Please log in to access this page.</div>
     );
   }
 
   if (!isAdmin) {
     return (
-      <div className="p-8 text-center" data-oid="e477ror">
+      <div className="p-8 text-center">
         You do not have permission to access this page.
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-6" data-oid="lq-x0u7">
-      <h1 className="text-3xl font-bold mb-6" data-oid="n.zlorb">
-        Admin Dashboard
-      </h1>
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
 
       {error && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
-          data-oid="s3-jz:f"
-        >
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
         </div>
       )}
 
       {/* Tab Navigation */}
-      <div className="border-b border-gray-200 mb-6" data-oid="3s.kcs6">
-        <nav className="-mb-px flex space-x-8" data-oid="roxb2-m">
+      <div className="border-b border-gray-200 mb-6">
+        <nav className="-mb-px flex space-x-8">
           <button
             onClick={() => setActiveTab("properties")}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "properties" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}
-            data-oid="0:5nk7-"
           >
             Properties
           </button>
           <button
             onClick={() => setActiveTab("users")}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "users" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}
-            data-oid="5tsi4m4"
           >
             Users
           </button>
@@ -148,114 +139,63 @@ const AdminDashboard = () => {
 
       {/* Properties Tab */}
       {activeTab === "properties" && (
-        <div data-oid="7m5v63m">
-          <div
-            className="flex justify-between items-center mb-6"
-            data-oid="ga-9doz"
-          >
-            <h2 className="text-xl font-semibold" data-oid="6_8mu8a">
-              Property Management
-            </h2>
+        <div>
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-semibold">Property Management</h2>
             <button
               onClick={() => navigate("/admin/properties/new")}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-              data-oid="ko_92l0"
             >
               Add New Property
             </button>
           </div>
 
           {loading ? (
-            <div className="text-center py-8" data-oid="vryq3si">
-              Loading properties...
-            </div>
+            <div className="text-center py-8">Loading properties...</div>
           ) : properties.length === 0 ? (
-            <div className="text-center py-8" data-oid="o_hu_t9">
-              No properties found.
-            </div>
+            <div className="text-center py-8">No properties found.</div>
           ) : (
-            <div className="overflow-x-auto" data-oid="k_lw969">
-              <table
-                className="min-w-full bg-white border border-gray-200"
-                data-oid="wxt:0ak"
-              >
-                <thead data-oid="_wkcn-0">
-                  <tr data-oid=".c1.i6l">
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="d0u4m1n"
-                    >
-                      Title
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="k0dw:3j"
-                    >
-                      Location
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="ck:x9da"
-                    >
-                      Price
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="_ou6at6"
-                    >
-                      Type
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="k:55q2b"
-                    >
-                      Sale Type
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="5vpdvah"
-                    >
-                      Actions
-                    </th>
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-200">
+                <thead>
+                  <tr>
+                    <th className="py-3 px-4 border-b text-left">Title</th>
+                    <th className="py-3 px-4 border-b text-left">Location</th>
+                    <th className="py-3 px-4 border-b text-left">Price</th>
+                    <th className="py-3 px-4 border-b text-left">Type</th>
+                    <th className="py-3 px-4 border-b text-left">Sale Type</th>
+                    <th className="py-3 px-4 border-b text-left">Actions</th>
                   </tr>
                 </thead>
-                <tbody data-oid="5q.m_16">
+                <tbody>
                   {properties.map((property) => (
-                    <tr
-                      key={property.id}
-                      className="hover:bg-gray-50"
-                      data-oid="5f1efu_"
-                    >
-                      <td className="py-3 px-4 border-b" data-oid="euunum0">
-                        {property.title}
-                      </td>
-                      <td className="py-3 px-4 border-b" data-oid="7rqchmg">
+                    <tr key={property.id} className="hover:bg-gray-50">
+                      <td className="py-3 px-4 border-b">{property.title}</td>
+                      <td className="py-3 px-4 border-b">
                         {property.location}
                       </td>
-                      <td className="py-3 px-4 border-b" data-oid="l917059">
+                      <td className="py-3 px-4 border-b">
                         ${property.price.toLocaleString()}
                       </td>
-                      <td className="py-3 px-4 border-b" data-oid="k7120ao">
+                      <td className="py-3 px-4 border-b">
                         {property.property_type?.name}
                       </td>
-                      <td className="py-3 px-4 border-b" data-oid="8qhvinf">
+                      <td className="py-3 px-4 border-b">
                         {property.sale_type?.name}
                       </td>
-                      <td className="py-3 px-4 border-b" data-oid="e117r:s">
-                        <div className="flex space-x-2" data-oid="ev3fugz">
+                      <td className="py-3 px-4 border-b">
+                        <div className="flex space-x-2">
                           <button
                             onClick={() =>
                               navigate(`/admin/properties/edit/${property.id}`)
                             }
                             className="text-blue-500 hover:text-blue-700"
-                            data-oid="jarmwi3"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteProperty(property.id)}
                             className="text-red-500 hover:text-red-700"
-                            data-oid="wx_z871"
                           >
                             Delete
                           </button>
@@ -264,7 +204,6 @@ const AdminDashboard = () => {
                               navigate(`/properties/${property.id}`)
                             }
                             className="text-green-500 hover:text-green-700"
-                            data-oid="e97m24j"
                           >
                             View
                           </button>
@@ -281,81 +220,46 @@ const AdminDashboard = () => {
 
       {/* Users Tab */}
       {activeTab === "users" && (
-        <div data-oid="-0cdig4">
-          <h2 className="text-xl font-semibold mb-6" data-oid="-md749j">
-            User Management
-          </h2>
+        <div>
+          <h2 className="text-xl font-semibold mb-6">User Management</h2>
 
           {loading ? (
-            <div className="text-center py-8" data-oid="az5jg_e">
-              Loading users...
-            </div>
+            <div className="text-center py-8">Loading users...</div>
           ) : users.length === 0 ? (
-            <div className="text-center py-8" data-oid="3u:ml.k">
-              No users found.
-            </div>
+            <div className="text-center py-8">No users found.</div>
           ) : (
-            <div className="overflow-x-auto" data-oid="jib4wdb">
-              <table
-                className="min-w-full bg-white border border-gray-200"
-                data-oid="fb0kkq."
-              >
-                <thead data-oid="5o8nx3o">
-                  <tr data-oid="zut0w5o">
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid=":fkh5xu"
-                    >
-                      Email
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="rtsc8l2"
-                    >
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border border-gray-200">
+                <thead>
+                  <tr>
+                    <th className="py-3 px-4 border-b text-left">Email</th>
+                    <th className="py-3 px-4 border-b text-left">
                       Admin Status
                     </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="giuug5p"
-                    >
-                      Created At
-                    </th>
-                    <th
-                      className="py-3 px-4 border-b text-left"
-                      data-oid="yngr1:8"
-                    >
-                      Actions
-                    </th>
+                    <th className="py-3 px-4 border-b text-left">Created At</th>
+                    <th className="py-3 px-4 border-b text-left">Actions</th>
                   </tr>
                 </thead>
-                <tbody data-oid="32dp7ob">
+                <tbody>
                   {users.map((user) => (
-                    <tr
-                      key={user.id}
-                      className="hover:bg-gray-50"
-                      data-oid="oodgc2d"
-                    >
-                      <td className="py-3 px-4 border-b" data-oid="47ryf1j">
-                        {user.email}
-                      </td>
-                      <td className="py-3 px-4 border-b" data-oid="0okgs-e">
+                    <tr key={user.id} className="hover:bg-gray-50">
+                      <td className="py-3 px-4 border-b">{user.email}</td>
+                      <td className="py-3 px-4 border-b">
                         <span
                           className={`px-2 py-1 rounded text-xs ${user.is_admin ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}
-                          data-oid="hhh::ar"
                         >
                           {user.is_admin ? "Admin" : "User"}
                         </span>
                       </td>
-                      <td className="py-3 px-4 border-b" data-oid="qdm5zde">
+                      <td className="py-3 px-4 border-b">
                         {new Date(user.created_at).toLocaleDateString()}
                       </td>
-                      <td className="py-3 px-4 border-b" data-oid="tmb9eq8">
+                      <td className="py-3 px-4 border-b">
                         <button
                           onClick={() =>
                             handleToggleAdminStatus(user.id, user.is_admin)
                           }
                           className={`px-3 py-1 rounded text-white ${user.is_admin ? "bg-orange-500 hover:bg-orange-600" : "bg-blue-500 hover:bg-blue-600"}`}
-                          data-oid="vy-3o-t"
                         >
                           {user.is_admin ? "Remove Admin" : "Make Admin"}
                         </button>

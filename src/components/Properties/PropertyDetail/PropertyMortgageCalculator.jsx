@@ -60,22 +60,15 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="bg-white dark:bg-brown-dark rounded-lg shadow-lg p-6"
-      data-oid="irszsp6"
     >
-      <h3
-        className="text-xl font-heading font-semibold text-brown-dark dark:text-beige-light mb-6"
-        data-oid="dk5da7d"
-      >
+      <h3 className="text-xl font-heading font-semibold text-brown-dark dark:text-beige-light mb-6">
         Mortgage Calculator
       </h3>
 
-      <div className="space-y-6" data-oid=":6v69nt">
+      <div className="space-y-6">
         {/* Property Price (Read-only) */}
-        <div data-oid="6ynhp8z">
-          <label
-            className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-            data-oid="j0bcgep"
-          >
+        <div>
+          <label className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1">
             Property Price
           </label>
           <input
@@ -83,16 +76,14 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             value={formatCurrency(propertyPrice)}
             className="input bg-beige-light dark:bg-brown cursor-not-allowed"
             disabled
-            data-oid="a7hxjl1"
           />
         </div>
 
         {/* Down Payment */}
-        <div data-oid="qlvmjnz">
+        <div>
           <label
             htmlFor="downPayment"
             className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-            data-oid="jpv8n2."
           >
             Down Payment
           </label>
@@ -105,27 +96,22 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             max={propertyPrice}
             step="1000"
             className="input"
-            data-oid="c0r0u35"
           />
 
-          <div
-            className="mt-2 flex justify-between text-xs text-brown dark:text-beige-medium"
-            data-oid="fgiafgf"
-          >
-            <span data-oid="4ycm3l8">
+          <div className="mt-2 flex justify-between text-xs text-brown dark:text-beige-medium">
+            <span>
               {Math.round((downPayment / propertyPrice) * 100)}% of property
               price
             </span>
-            <span data-oid="l3urstj">{formatCurrency(downPayment)}</span>
+            <span>{formatCurrency(downPayment)}</span>
           </div>
         </div>
 
         {/* Loan Amount */}
-        <div data-oid="3sxlyoc">
+        <div>
           <label
             htmlFor="loanAmount"
             className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-            data-oid="0r0swsh"
           >
             Loan Amount
           </label>
@@ -138,16 +124,14 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             max={propertyPrice}
             step="1000"
             className="input"
-            data-oid="txpa7b-"
           />
         </div>
 
         {/* Interest Rate */}
-        <div data-oid="q4m8xx8">
+        <div>
           <label
             htmlFor="interestRate"
             className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-            data-oid="gh9pbad"
           >
             Interest Rate (%)
           </label>
@@ -160,16 +144,14 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             max="20"
             step="0.1"
             className="input"
-            data-oid="bfcrnk0"
           />
         </div>
 
         {/* Loan Term */}
-        <div data-oid="ybkjy6r">
+        <div>
           <label
             htmlFor="loanTerm"
             className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-            data-oid="dr0j0hk"
           >
             Loan Term (years)
           </label>
@@ -178,50 +160,28 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             value={loanTerm}
             onChange={(e) => setLoanTerm(parseInt(e.target.value))}
             className="input"
-            data-oid="yu_x:.n"
           >
-            <option value="15" data-oid="f9z7z53">
-              15 years
-            </option>
-            <option value="20" data-oid="2z63d:b">
-              20 years
-            </option>
-            <option value="30" data-oid="jqym_tk">
-              30 years
-            </option>
+            <option value="15">15 years</option>
+            <option value="20">20 years</option>
+            <option value="30">30 years</option>
           </select>
         </div>
 
         {/* Results */}
-        <div
-          className="bg-beige-light dark:bg-brown rounded-lg p-4 text-center"
-          data-oid="mwume0r"
-        >
-          <p
-            className="text-sm text-brown dark:text-beige-medium mb-1"
-            data-oid="n03_.oj"
-          >
+        <div className="bg-beige-light dark:bg-brown rounded-lg p-4 text-center">
+          <p className="text-sm text-brown dark:text-beige-medium mb-1">
             Estimated Monthly Payment
           </p>
-          <p
-            className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light"
-            data-oid="bb93v99"
-          >
+          <p className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light">
             {formatCurrency(monthlyPayment)}
           </p>
-          <p
-            className="text-xs text-brown dark:text-beige-medium mt-2"
-            data-oid="r4by:hw"
-          >
+          <p className="text-xs text-brown dark:text-beige-medium mt-2">
             Principal & Interest only. Taxes and insurance not included.
           </p>
         </div>
 
         {/* Disclaimer */}
-        <p
-          className="text-xs text-brown dark:text-beige-medium italic"
-          data-oid="efkqem6"
-        >
+        <p className="text-xs text-brown dark:text-beige-medium italic">
           This calculator is for estimation purposes only. Contact a mortgage
           professional for accurate rates and terms.
         </p>

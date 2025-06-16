@@ -30,19 +30,15 @@ const blogPosts = [
 
 const BlogTeaser = () => {
   return (
-    <section className="py-16 bg-beige-light dark:bg-brown" data-oid="czgmwkc">
-      <div className="container mx-auto px-4" data-oid="7xzyud8">
+    <section className="py-16 bg-beige-light dark:bg-brown">
+      <div className="container mx-auto px-4">
         <SectionHeading
           title="Real Estate Insights"
           subtitle="Stay informed with the latest market trends, investment strategies, and home improvement tips from our expert team."
           centered
-          data-oid="4b_nakj"
         />
 
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-6 sm:gap-8 mt-8 xs:mt-10 sm:mt-12"
-          data-oid="pag4w5j"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-6 sm:gap-8 mt-8 xs:mt-10 sm:mt-12">
           {blogPosts.map((post, index) => (
             <motion.div
               key={post.id}
@@ -50,18 +46,16 @@ const BlogTeaser = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              data-oid="e35567a"
             >
-              <BlogCard post={post} data-oid="lk9s7qv" />
+              <BlogCard post={post} />
             </motion.div>
           ))}
         </div>
 
-        <div className="text-center mt-8 xs:mt-10 sm:mt-12" data-oid="9rxkg1b">
+        <div className="text-center mt-8 xs:mt-10 sm:mt-12">
           <a
             href="/blog"
             className="btn-outline text-xs xs:text-sm sm:text-base"
-            data-oid="0d7e.uv"
           >
             Explore All Articles
           </a>

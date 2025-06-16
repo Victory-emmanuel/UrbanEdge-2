@@ -98,11 +98,7 @@ export function AuthProvider({ children }) {
     isAdmin,
   };
 
-  return (
-    <AuthContext.Provider value={value} data-oid="a_sw:4m">
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 /**

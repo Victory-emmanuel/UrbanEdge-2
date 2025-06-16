@@ -4,15 +4,11 @@ import BlogCard from "../UI/BlogCard";
 const BlogGrid = ({ posts, loading }) => {
   if (loading) {
     return (
-      <div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        data-oid="37h:ox6"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[...Array(6)].map((_, index) => (
           <div
             key={index}
             className="bg-beige-medium dark:bg-brown animate-pulse rounded-lg h-96"
-            data-oid="7nclrjo"
           ></div>
         ))}
       </div>
@@ -21,14 +17,11 @@ const BlogGrid = ({ posts, loading }) => {
 
   if (posts.length === 0) {
     return (
-      <div className="text-center py-12" data-oid="r8jzcup">
-        <h3
-          className="text-xl font-heading font-semibold text-brown-dark dark:text-beige-light mb-2"
-          data-oid="1rme.qz"
-        >
+      <div className="text-center py-12">
+        <h3 className="text-xl font-heading font-semibold text-brown-dark dark:text-beige-light mb-2">
           No articles found
         </h3>
-        <p className="text-brown dark:text-beige-medium" data-oid="9ox24v4">
+        <p className="text-brown dark:text-beige-medium">
           Try adjusting your search or category filters.
         </p>
       </div>
@@ -36,19 +29,15 @@ const BlogGrid = ({ posts, loading }) => {
   }
 
   return (
-    <div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-      data-oid="ty:vqer"
-    >
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {posts.map((post, index) => (
         <motion.div
           key={post.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: index * 0.1 }}
-          data-oid="ln_p59."
         >
-          <BlogCard post={post} data-oid="mlz9.9i" />
+          <BlogCard post={post} />
         </motion.div>
       ))}
     </div>

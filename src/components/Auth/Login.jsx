@@ -40,14 +40,8 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="max-w-md mx-auto my-12 p-8 bg-white dark:bg-brown-dark shadow-lg rounded-lg"
-      data-oid="obeuerh"
-    >
-      <h1
-        className="text-2xl font-bold text-center mb-6 text-brown-dark dark:text-beige-light"
-        data-oid="132w7ni"
-      >
+    <div className="max-w-md mx-auto my-12 p-8 bg-white dark:bg-brown-dark shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold text-center mb-6 text-brown-dark dark:text-beige-light">
         Sign In
       </h1>
 
@@ -55,20 +49,16 @@ const Login = () => {
         <div
           className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
           role="alert"
-          data-oid="fslyanq"
         >
-          <span className="block sm:inline" data-oid="_k4vzy0">
-            {error}
-          </span>
+          <span className="block sm:inline">{error}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6" data-oid="8:f26f8">
-        <div data-oid="oe7:eln">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
           <label
             htmlFor="email"
             className="block text-sm font-medium text-brown dark:text-beige-medium mb-1"
-            data-oid="iiu1fjv"
           >
             Email Address
           </label>
@@ -80,15 +70,13 @@ const Login = () => {
             required
             className="input w-full"
             placeholder="your@email.com"
-            data-oid="wsm.h1q"
           />
         </div>
 
-        <div data-oid="lpfr0kg">
+        <div>
           <label
             htmlFor="password"
             className="block text-sm font-medium text-brown dark:text-beige-medium mb-1"
-            data-oid=".qus69t"
           >
             Password
           </label>
@@ -100,55 +88,49 @@ const Login = () => {
             required
             className="input w-full"
             placeholder="••••••••"
-            data-oid="6r-_kbn"
           />
         </div>
 
-        <div className="flex items-center justify-between" data-oid="bo5m951">
-          <div className="flex items-center" data-oid="rm8-e1i">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <input
               id="remember-me"
               name="remember-me"
               type="checkbox"
               className="h-4 w-4 text-taupe focus:ring-taupe border-gray-300 rounded"
-              data-oid="kvsn_x."
             />
 
             <label
               htmlFor="remember-me"
               className="ml-2 block text-sm text-brown dark:text-beige-medium"
-              data-oid="wsp0lc9"
             >
               Remember me
             </label>
           </div>
 
-          <div className="text-sm" data-oid="qu5.a10">
+          <div className="text-sm">
             <a
               href="#"
               className="font-medium text-taupe hover:text-brown-dark dark:hover:text-beige-light"
-              data-oid="mnien2h"
             >
               Forgot your password?
             </a>
           </div>
         </div>
 
-        <div data-oid="stb1tp8">
+        <div>
           <button
             type="submit"
             disabled={loading}
             className="btn-primary w-full flex justify-center"
-            data-oid="thwuyuf"
           >
             {loading ? (
-              <span className="flex items-center" data-oid="hw-a-k1">
+              <span className="flex items-center">
                 <svg
                   className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  data-oid=".hggg4-"
                 >
                   <circle
                     className="opacity-25"
@@ -157,13 +139,11 @@ const Login = () => {
                     r="10"
                     stroke="currentColor"
                     strokeWidth="4"
-                    data-oid="ocfl8ef"
                   ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    data-oid="5vyik8y"
                   ></path>
                 </svg>
                 Signing in...
@@ -175,16 +155,12 @@ const Login = () => {
         </div>
       </form>
 
-      <div className="mt-6 text-center" data-oid="f7plz9j">
-        <p
-          className="text-sm text-brown dark:text-beige-medium"
-          data-oid="iz4zip5"
-        >
+      <div className="mt-6 text-center">
+        <p className="text-sm text-brown dark:text-beige-medium">
           Don't have an account?{" "}
           <Link
             to="/register"
             className="font-medium text-taupe hover:text-brown-dark dark:hover:text-beige-light"
-            data-oid="t-hot5r"
           >
             Sign up
           </Link>

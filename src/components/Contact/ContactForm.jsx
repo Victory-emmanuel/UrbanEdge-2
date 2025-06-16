@@ -101,57 +101,44 @@ const ContactForm = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="bg-white dark:bg-brown-dark rounded-lg shadow-lg p-6 md:p-8"
-      data-oid="n8ej6j."
     >
-      <h2
-        className="text-2xl font-heading font-bold mb-6 text-brown-dark dark:text-beige-light"
-        data-oid=":.cpjcm"
-      >
+      <h2 className="text-2xl font-heading font-bold mb-6 text-brown-dark dark:text-beige-light">
         Send Us a Message
       </h2>
 
       {isSubmitted ? (
-        <div className="text-center py-8" data-oid="i6r:ebl">
-          <div className="text-taupe mb-4" data-oid="ktf6q:b">
+        <div className="text-center py-8">
+          <div className="text-taupe mb-4">
             <svg
               className="h-16 w-16 mx-auto"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              data-oid="1a2maab"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                data-oid="7u5-lbm"
               />
             </svg>
           </div>
-          <h3
-            className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2"
-            data-oid="9g03k45"
-          >
+          <h3 className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2">
             Message Sent!
           </h3>
-          <p className="text-brown dark:text-beige-medium" data-oid="dabv0ze">
+          <p className="text-brown dark:text-beige-medium">
             Thank you for contacting us. We'll get back to you as soon as
             possible.
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} data-oid="9sn3t5h">
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            data-oid="-ne3ns9"
-          >
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Name */}
-            <div className="md:col-span-1" data-oid="-9a834n">
+            <div className="md:col-span-1">
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="w72:jop"
               >
                 Your Name*
               </label>
@@ -162,22 +149,18 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 className={`input ${errors.name ? "border-destructive" : ""}`}
-                data-oid="a-:ltgo"
               />
 
               {errors.name && (
-                <p className="mt-1 text-sm text-destructive" data-oid="tr:63hk">
-                  {errors.name}
-                </p>
+                <p className="mt-1 text-sm text-destructive">{errors.name}</p>
               )}
             </div>
 
             {/* Email */}
-            <div className="md:col-span-1" data-oid="h6ywcbt">
+            <div className="md:col-span-1">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="e5:8_iq"
               >
                 Email Address*
               </label>
@@ -188,22 +171,18 @@ const ContactForm = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 className={`input ${errors.email ? "border-destructive" : ""}`}
-                data-oid="d7fi67w"
               />
 
               {errors.email && (
-                <p className="mt-1 text-sm text-destructive" data-oid="51snr4i">
-                  {errors.email}
-                </p>
+                <p className="mt-1 text-sm text-destructive">{errors.email}</p>
               )}
             </div>
 
             {/* Phone */}
-            <div className="md:col-span-1" data-oid="0vzd4xz">
+            <div className="md:col-span-1">
               <label
                 htmlFor="phone"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="-vrjye3"
               >
                 Phone Number
               </label>
@@ -214,16 +193,14 @@ const ContactForm = () => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 className="input"
-                data-oid="9-s1vy:"
               />
             </div>
 
             {/* Service */}
-            <div className="md:col-span-1" data-oid="c:_i277">
+            <div className="md:col-span-1">
               <label
                 htmlFor="service"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid=":-df-8l"
               >
                 Service Interested In*
               </label>
@@ -233,31 +210,25 @@ const ContactForm = () => {
                 value={formData.service}
                 onChange={handleInputChange}
                 className={`input ${errors.service ? "border-destructive" : ""}`}
-                data-oid="kzq1ao0"
               >
                 {serviceOptions.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                    data-oid="q2k09h7"
-                  >
+                  <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
               </select>
               {errors.service && (
-                <p className="mt-1 text-sm text-destructive" data-oid="ffay1jw">
+                <p className="mt-1 text-sm text-destructive">
                   {errors.service}
                 </p>
               )}
             </div>
 
             {/* Subject */}
-            <div className="md:col-span-2" data-oid="n8tzi8z">
+            <div className="md:col-span-2">
               <label
                 htmlFor="subject"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="dwxivdh"
               >
                 Subject*
               </label>
@@ -268,22 +239,20 @@ const ContactForm = () => {
                 value={formData.subject}
                 onChange={handleInputChange}
                 className={`input ${errors.subject ? "border-destructive" : ""}`}
-                data-oid=":-q6a_0"
               />
 
               {errors.subject && (
-                <p className="mt-1 text-sm text-destructive" data-oid="l55ubtq">
+                <p className="mt-1 text-sm text-destructive">
                   {errors.subject}
                 </p>
               )}
             </div>
 
             {/* Message */}
-            <div className="md:col-span-2" data-oid="_tc27xf">
+            <div className="md:col-span-2">
               <label
                 htmlFor="message"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="hb1xun."
               >
                 Message*
               </label>
@@ -294,24 +263,22 @@ const ContactForm = () => {
                 onChange={handleInputChange}
                 rows="5"
                 className={`input ${errors.message ? "border-destructive" : ""}`}
-                data-oid="c08r9f7"
               ></textarea>
               {errors.message && (
-                <p className="mt-1 text-sm text-destructive" data-oid="0es3f3_">
+                <p className="mt-1 text-sm text-destructive">
                   {errors.message}
                 </p>
               )}
             </div>
 
             {/* Submit Button */}
-            <div className="md:col-span-2" data-oid="ku:ylaq">
+            <div className="md:col-span-2">
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className={`btn-primary w-full flex items-center justify-center ${
                   isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                 }`}
-                data-oid="qlyirv0"
               >
                 {isSubmitting ? (
                   <>
@@ -320,7 +287,6 @@ const ContactForm = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      data-oid="y8duue."
                     >
                       <circle
                         className="opacity-25"
@@ -329,13 +295,11 @@ const ContactForm = () => {
                         r="10"
                         stroke="currentColor"
                         strokeWidth="4"
-                        data-oid="rqbnsgr"
                       ></circle>
                       <path
                         className="opacity-75"
                         fill="currentColor"
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        data-oid="7tddvkp"
                       ></path>
                     </svg>
                     Sending...

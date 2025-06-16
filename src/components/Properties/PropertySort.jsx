@@ -20,35 +20,25 @@ const PropertySort = ({ onSortChange, initialSort = "newest" }) => {
   };
 
   return (
-    <div className="relative" data-oid="tk:9fmu">
+    <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full px-4 py-2 bg-white dark:bg-brown-dark rounded-lg shadow-md text-brown-dark dark:text-beige-light"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        data-oid="gw094ak"
       >
-        <span data-oid="x:wu.g.">
+        <span>
           Sort:{" "}
           {sortOptions.find((option) => option.value === selectedSort)?.label}
         </span>
         <ChevronDownIcon
           className={`h-5 w-5 transition-transform ${isOpen ? "rotate-180" : ""}`}
-          data-oid="9kr9p25"
         />
       </button>
 
       {isOpen && (
-        <div
-          className="absolute z-10 w-full mt-1 bg-white dark:bg-brown-dark rounded-lg shadow-lg"
-          data-oid="1otftsd"
-        >
-          <ul
-            className="py-1"
-            role="listbox"
-            aria-labelledby="sort-button"
-            data-oid="1c_d-pp"
-          >
+        <div className="absolute z-10 w-full mt-1 bg-white dark:bg-brown-dark rounded-lg shadow-lg">
+          <ul className="py-1" role="listbox" aria-labelledby="sort-button">
             {sortOptions.map((option) => (
               <li
                 key={option.value}
@@ -60,7 +50,6 @@ const PropertySort = ({ onSortChange, initialSort = "newest" }) => {
                     : "text-brown-dark dark:text-beige-light"
                 }`}
                 onClick={() => handleSortChange(option.value)}
-                data-oid="u3lhayk"
               >
                 {option.label}
               </li>

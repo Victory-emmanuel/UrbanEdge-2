@@ -8,10 +8,7 @@ const SectionHeading = ({
   className = "",
 }) => {
   return (
-    <div
-      className={`mb-12 ${centered ? "text-center" : ""} ${className}`}
-      data-oid="f8q47jc"
-    >
+    <div className={`mb-12 ${centered ? "text-center" : ""} ${className}`}>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -20,7 +17,6 @@ const SectionHeading = ({
         className={`font-heading font-bold mb-2 xs:mb-4 text-xl xs:text-2xl sm:text-3xl md:text-4xl ${
           light ? "text-beige-light" : "text-brown-dark dark:text-beige-light"
         }`}
-        data-oid="5pve-ou"
       >
         {title}
       </motion.h2>
@@ -34,7 +30,6 @@ const SectionHeading = ({
           className={`max-w-2xl text-sm xs:text-base ${centered ? "mx-auto" : ""} ${
             light ? "text-beige-medium" : "text-brown dark:text-beige-medium"
           }`}
-          data-oid="t9:wwjv"
         >
           {subtitle}
         </motion.p>

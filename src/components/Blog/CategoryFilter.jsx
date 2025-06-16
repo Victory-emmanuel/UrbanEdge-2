@@ -7,9 +7,8 @@ const CategoryFilter = ({ categories, activeCategory, onCategoryChange }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="mb-8"
-      data-oid="kj6.7f2"
     >
-      <div className="flex flex-wrap gap-3" data-oid="0oi766v">
+      <div className="flex flex-wrap gap-3">
         <button
           onClick={() => onCategoryChange(null)}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
@@ -17,7 +16,6 @@ const CategoryFilter = ({ categories, activeCategory, onCategoryChange }) => {
               ? "bg-taupe text-white"
               : "bg-beige-light dark:bg-brown text-brown-dark dark:text-beige-light hover:bg-beige-medium dark:hover:bg-brown-dark"
           }`}
-          data-oid="vsvlqzq"
         >
           All
         </button>
@@ -31,7 +29,6 @@ const CategoryFilter = ({ categories, activeCategory, onCategoryChange }) => {
                 ? "bg-taupe text-white"
                 : "bg-beige-light dark:bg-brown text-brown-dark dark:text-beige-light hover:bg-beige-medium dark:hover:bg-brown-dark"
             }`}
-            data-oid="b3cx8hp"
           >
             {category}
           </button>

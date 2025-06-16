@@ -44,21 +44,16 @@ const FAQSection = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="mt-12"
-      data-oid="448bpc0"
     >
-      <h2
-        className="text-2xl font-heading font-bold mb-6 text-brown-dark dark:text-beige-light"
-        data-oid="olp0xa6"
-      >
+      <h2 className="text-2xl font-heading font-bold mb-6 text-brown-dark dark:text-beige-light">
         Frequently Asked Questions
       </h2>
 
-      <div className="space-y-4" data-oid="5-57b-2">
+      <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div
             key={index}
             className="border border-beige-medium dark:border-brown rounded-lg overflow-hidden"
-            data-oid="u1fkgcv"
           >
             <button
               onClick={() => toggleFAQ(index)}
@@ -68,36 +63,25 @@ const FAQSection = () => {
                   : "bg-white dark:bg-brown-dark hover:bg-beige-light dark:hover:bg-brown text-brown-dark dark:text-beige-light"
               }`}
               aria-expanded={openIndex === index}
-              data-oid="m:a21n9"
             >
-              <span className="font-heading font-semibold" data-oid="sr_ki5t">
-                {faq.question}
-              </span>
+              <span className="font-heading font-semibold">{faq.question}</span>
               <ChevronDownIcon
                 className={`h-5 w-5 transition-transform ${
                   openIndex === index ? "transform rotate-180" : ""
                 }`}
-                data-oid="u8fpyll"
               />
             </button>
 
-            <AnimatePresence data-oid="m279zlk">
+            <AnimatePresence>
               {openIndex === index && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3 }}
-                  data-oid="9i3dekl"
                 >
-                  <div
-                    className="p-4 bg-white dark:bg-brown-dark border-t border-beige-medium dark:border-brown"
-                    data-oid="3j7l-ol"
-                  >
-                    <p
-                      className="text-brown dark:text-beige-medium"
-                      data-oid="d.0u:6t"
-                    >
+                  <div className="p-4 bg-white dark:bg-brown-dark border-t border-beige-medium dark:border-brown">
+                    <p className="text-brown dark:text-beige-medium">
                       {faq.answer}
                     </p>
                   </div>

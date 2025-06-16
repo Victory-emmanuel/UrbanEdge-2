@@ -135,30 +135,37 @@ export const propertyService = {
    * @returns {Promise<{data: Object, error: Object}>}
    */
   async updateProperty(id, property) {
-    // Prepare fields to update
-    const fieldsToUpdate = {
-      title: property.title,
-      location: property.location,
-      price: property.price,
-      bedrooms: property.bedrooms,
-      bathrooms: property.bathrooms,
-      square_feet: property.squareFeet,
-      description: property.description,
-      floor_plan_url: property.floorPlanUrl,
-      neighborhood: property.neighborhood,
-      property_type_id: property.propertyTypeId,
-      sale_type_id: property.saleTypeId,
-      updated_at: new Date()
-    };
+    // Prepare fields to update - only include non-empty values
+    const fieldsToUpdate = {};
+
+    if (property.title) fieldsToUpdate.title = property.title;
+    if (property.location) fieldsToUpdate.location = property.location;
+    if (property.price !== undefined && property.price !== null) fieldsToUpdate.price = property.price;
+    if (property.bedrooms !== undefined && property.bedrooms !== null) fieldsToUpdate.bedrooms = property.bedrooms;
+    if (property.bathrooms !== undefined && property.bathrooms !== null) fieldsToUpdate.bathrooms = property.bathrooms;
+    if (property.squareFeet !== undefined && property.squareFeet !== null) fieldsToUpdate.square_feet = property.squareFeet;
+    if (property.description) fieldsToUpdate.description = property.description;
+    if (property.floorPlanUrl) fieldsToUpdate.floor_plan_url = property.floorPlanUrl;
+    if (property.neighborhood) fieldsToUpdate.neighborhood = property.neighborhood;
+    if (property.propertyTypeId && property.propertyTypeId.trim()) fieldsToUpdate.property_type_id = property.propertyTypeId.trim();
+    if (property.saleTypeId && property.saleTypeId.trim()) fieldsToUpdate.sale_type_id = property.saleTypeId.trim();
+
+    // Always update the timestamp
+    fieldsToUpdate.updated_at = new Date().toISOString();
+
+    console.log('PropertyService: Updating property', id, 'with fields:', fieldsToUpdate);
 
     // Call the update_property RPC function
     const { data, error } = await supabase.rpc('update_property', {
-      property_id: id,
+      p_property_id: id,
       fields_to_update: fieldsToUpdate,
       feature_ids: property.features || null
     });
 
-    if (error) return { data: null, error };
+    if (error) {
+      console.error('PropertyService: Update error:', error);
+      return { data: null, error };
+    }
 
     // Handle images if provided
     if (property.images) {

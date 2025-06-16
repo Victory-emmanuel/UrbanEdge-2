@@ -182,38 +182,35 @@ const BlogPage = () => {
 
   return (
     <>
-      <Helmet data-oid="mn1e6sf">
-        <title data-oid="7jmjd_1">Blog | UrbanEdge Real Estate</title>
+      <Helmet>
+        <title>Blog | UrbanEdge Real Estate</title>
         <meta
           name="description"
           content="Explore real estate insights, market trends, and expert advice on buying, selling, and investing in properties. Stay informed with UrbanEdge's real estate blog."
-          data-oid="ch52k-w"
         />
       </Helmet>
 
-      <HeroSection onSearch={handleSearch} data-oid="8yu6ybf" />
+      <HeroSection onSearch={handleSearch} />
 
       <section
         className="py-16 bg-beige-light dark:bg-brown"
         id="posts-section"
-        data-oid="l6sz2x7"
       >
-        <div className="container mx-auto px-4" data-oid="_hm1fdy">
+        <div className="container mx-auto px-4">
           {/* Category Filter */}
           <CategoryFilter
             categories={categories}
             activeCategory={activeCategory}
             onCategoryChange={handleCategoryChange}
-            data-oid="euu_yqy"
           />
 
           {/* Featured Post (only show if no filters are applied) */}
           {featuredPost && !activeCategory && !searchQuery && (
-            <FeaturedPost post={featuredPost} data-oid="005mjzb" />
+            <FeaturedPost post={featuredPost} />
           )}
 
           {/* Blog Grid */}
-          <BlogGrid posts={currentPosts} loading={loading} data-oid="o4q5eg2" />
+          <BlogGrid posts={currentPosts} loading={loading} />
 
           {/* Pagination */}
           {totalPages > 1 && (
@@ -221,7 +218,6 @@ const BlogPage = () => {
               currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
-              data-oid="wd0tvse"
             />
           )}
         </div>

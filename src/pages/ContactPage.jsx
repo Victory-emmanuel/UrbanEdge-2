@@ -8,42 +8,35 @@ import FAQSection from "../components/Contact/FAQSection";
 const ContactPage = () => {
   return (
     <>
-      <Helmet data-oid="t:75nu.">
-        <title data-oid="bh31-xk">Contact Us | UrbanEdge Real Estate</title>
+      <Helmet>
+        <title>Contact Us | UrbanEdge Real Estate</title>
         <meta
           name="description"
           content="Get in touch with UrbanEdge Real Estate. Contact our team of experienced professionals for all your real estate needs, questions, and inquiries."
-          data-oid="4d03c2x"
         />
       </Helmet>
 
-      <HeroSection data-oid="wh70-r." />
+      <HeroSection />
 
-      <section
-        className="py-16 bg-beige-light dark:bg-brown"
-        data-oid="f3l3rlc"
-      >
-        <div className="container mx-auto px-4" data-oid="9aelm8l">
-          <div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-            data-oid="1pb3bdc"
-          >
+      <section className="py-16 bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Form */}
-            <div data-oid="jwxf:sg">
-              <ContactForm data-oid="h.w5h-l" />
+            <div>
+              <ContactForm />
             </div>
 
             {/* Contact Info */}
-            <div data-oid="64zx7sr">
-              <ContactInfo data-oid="zi5xkuz" />
+            <div>
+              <ContactInfo />
             </div>
           </div>
 
           {/* Map */}
-          <MapSection data-oid="ll:3_95" />
+          <MapSection />
 
           {/* FAQs */}
-          <FAQSection data-oid="pcm6nmz" />
+          <FAQSection />
         </div>
       </section>
     </>

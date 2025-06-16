@@ -13,33 +13,20 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   // Show nothing while authentication state is loading
   if (loading) {
     return (
-      <div
-        className="flex justify-center items-center min-h-screen"
-        data-oid="f5upv2i"
-      >
-        <div
-          className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-taupe"
-          data-oid="piiemso"
-        ></div>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-taupe"></div>
       </div>
     );
   }
 
   // If user is not authenticated, redirect to login
   if (!user) {
-    return (
-      <Navigate
-        to="/login"
-        state={{ from: location }}
-        replace
-        data-oid="z0n_41f"
-      />
-    );
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   // If route requires admin privileges but user is not admin, redirect to home
   if (requireAdmin && !isAdmin) {
-    return <Navigate to="/" replace data-oid="k.xyd.r" />;
+    return <Navigate to="/" replace />;
   }
 
   // User is authenticated and has required privileges, render the protected content

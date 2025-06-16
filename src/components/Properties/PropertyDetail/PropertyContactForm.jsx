@@ -45,39 +45,25 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
   };
 
   return (
-    <div
-      className="bg-white dark:bg-brown-dark rounded-lg shadow-lg p-6"
-      data-oid="wr1jecz"
-    >
+    <div className="bg-white dark:bg-brown-dark rounded-lg shadow-lg p-6">
       {/* Agent Info */}
-      <div className="flex items-center mb-6" data-oid="d_po8on">
+      <div className="flex items-center mb-6">
         <img
           src={agent.photo}
           alt={agent.name}
           className="w-16 h-16 rounded-full object-cover mr-4"
-          data-oid="hw9327c"
         />
 
-        <div data-oid="19a-7h6">
-          <h3
-            className="font-heading font-bold text-brown-dark dark:text-beige-light"
-            data-oid="ta9byf9"
-          >
+        <div>
+          <h3 className="font-heading font-bold text-brown-dark dark:text-beige-light">
             {agent.name}
           </h3>
-          <p
-            className="text-brown dark:text-beige-medium text-sm mb-1"
-            data-oid="seldsb-"
-          >
+          <p className="text-brown dark:text-beige-medium text-sm mb-1">
             {agent.title}
           </p>
-          <div className="flex items-center text-taupe" data-oid="e-q87-7">
-            <PhoneIcon className="h-4 w-4 mr-1" data-oid="00n.z.q" />
-            <a
-              href={`tel:${agent.phone}`}
-              className="text-sm hover:underline"
-              data-oid="2yssgej"
-            >
+          <div className="flex items-center text-taupe">
+            <PhoneIcon className="h-4 w-4 mr-1" />
+            <a href={`tel:${agent.phone}`} className="text-sm hover:underline">
               {agent.phone}
             </a>
           </div>
@@ -85,10 +71,7 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
       </div>
 
       {/* Form Type Tabs */}
-      <div
-        className="flex mb-6 border-b border-beige-medium dark:border-brown"
-        data-oid="uezir39"
-      >
+      <div className="flex mb-6 border-b border-beige-medium dark:border-brown">
         <button
           onClick={() => setFormType("contact")}
           className={`flex-1 py-2 font-medium text-center ${
@@ -96,7 +79,6 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
               ? "text-taupe border-b-2 border-taupe"
               : "text-brown dark:text-beige-medium"
           }`}
-          data-oid="3dzmu4b"
         >
           Contact Agent
         </button>
@@ -107,7 +89,6 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
               ? "text-taupe border-b-2 border-taupe"
               : "text-brown dark:text-beige-medium"
           }`}
-          data-oid="-snul4n"
         >
           Schedule Tour
         </button>
@@ -119,45 +100,38 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="text-center py-6"
-          data-oid="eqfa6s_"
         >
-          <div className="text-taupe mb-4" data-oid="_t5vjok">
+          <div className="text-taupe mb-4">
             <svg
               className="h-12 w-12 mx-auto"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              data-oid="w6:djoh"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                data-oid="qv8bxf4"
               />
             </svg>
           </div>
-          <h3
-            className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2"
-            data-oid="38:yd2k"
-          >
+          <h3 className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2">
             {formType === "contact" ? "Message Sent!" : "Tour Scheduled!"}
           </h3>
-          <p className="text-brown dark:text-beige-medium" data-oid="d6nobx1">
+          <p className="text-brown dark:text-beige-medium">
             {formType === "contact"
               ? `Thank you for your interest. ${agent.name} will contact you shortly.`
               : `Your tour has been scheduled. ${agent.name} will confirm the details soon.`}
           </p>
         </motion.div>
       ) : (
-        <form onSubmit={handleSubmit} data-oid="eh10-_:">
-          <div className="space-y-4" data-oid="y3xtvbr">
-            <div data-oid="bd92bmn">
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div>
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid=".lfyk5o"
               >
                 Your Name*
               </label>
@@ -169,15 +143,13 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                 onChange={handleInputChange}
                 className="input"
                 required
-                data-oid="0rca049"
               />
             </div>
 
-            <div data-oid="ihq5so_">
+            <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="ag9d1_n"
               >
                 Email Address*
               </label>
@@ -189,15 +161,13 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                 onChange={handleInputChange}
                 className="input"
                 required
-                data-oid="l5vxs.u"
               />
             </div>
 
-            <div data-oid="4oqs:wj">
+            <div>
               <label
                 htmlFor="phone"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="jzmdxjp"
               >
                 Phone Number
               </label>
@@ -208,17 +178,15 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                 value={formData.phone}
                 onChange={handleInputChange}
                 className="input"
-                data-oid="nqp1duo"
               />
             </div>
 
             {formType === "tour" && (
-              <div className="grid grid-cols-2 gap-4" data-oid="jff0d.8">
-                <div data-oid="hj_wlxb">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
                   <label
                     htmlFor="tourDate"
                     className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                    data-oid="wlo53cx"
                   >
                     Preferred Date*
                   </label>
@@ -230,14 +198,12 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                     onChange={handleInputChange}
                     className="input"
                     required={formType === "tour"}
-                    data-oid="-6gm_xp"
                   />
                 </div>
-                <div data-oid="0n01:ag">
+                <div>
                   <label
                     htmlFor="tourTime"
                     className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                    data-oid="vnpc0oz"
                   >
                     Preferred Time*
                   </label>
@@ -248,30 +214,24 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                     onChange={handleInputChange}
                     className="input"
                     required={formType === "tour"}
-                    data-oid="ae1sb.e"
                   >
-                    <option value="" data-oid="-d:8qge">
-                      Select a time
-                    </option>
-                    <option value="Morning (9AM-12PM)" data-oid="q2:rvte">
+                    <option value="">Select a time</option>
+                    <option value="Morning (9AM-12PM)">
                       Morning (9AM-12PM)
                     </option>
-                    <option value="Afternoon (12PM-4PM)" data-oid="j4ttx1f">
+                    <option value="Afternoon (12PM-4PM)">
                       Afternoon (12PM-4PM)
                     </option>
-                    <option value="Evening (4PM-7PM)" data-oid="u0_f5de">
-                      Evening (4PM-7PM)
-                    </option>
+                    <option value="Evening (4PM-7PM)">Evening (4PM-7PM)</option>
                   </select>
                 </div>
               </div>
             )}
 
-            <div data-oid="zs9dyet">
+            <div>
               <label
                 htmlFor="message"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="dj1iz3p"
               >
                 Message
               </label>
@@ -282,7 +242,6 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                 onChange={handleInputChange}
                 rows="4"
                 className="input"
-                data-oid="d96qo74"
               ></textarea>
             </div>
 
@@ -292,7 +251,6 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
               className={`btn-primary w-full flex items-center justify-center ${
                 isSubmitting ? "opacity-70 cursor-not-allowed" : ""
               }`}
-              data-oid="xvqdtnk"
             >
               {isSubmitting ? (
                 <svg
@@ -300,7 +258,6 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  data-oid="0pj2hs2"
                 >
                   <circle
                     className="opacity-25"
@@ -309,17 +266,15 @@ const PropertyContactForm = ({ agent, propertyTitle }) => {
                     r="10"
                     stroke="currentColor"
                     strokeWidth="4"
-                    data-oid=".rvskop"
                   ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    data-oid="m7_6ad3"
                   ></path>
                 </svg>
               ) : formType === "tour" ? (
-                <CalendarDaysIcon className="h-5 w-5 mr-2" data-oid="27.9v4x" />
+                <CalendarDaysIcon className="h-5 w-5 mr-2" />
               ) : (
                 <></>
               )}

@@ -30,26 +30,21 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 bg-beige-light dark:bg-brown" data-oid="-krrz2m">
-      <div className="container mx-auto px-4" data-oid="vuwaw3c">
+    <section className="py-16 bg-beige-light dark:bg-brown">
+      <div className="container mx-auto px-4">
         <SectionHeading
           title="How It Works"
           subtitle="Our streamlined process makes finding and securing your dream property simple and stress-free."
           centered
-          data-oid="rnr.e19"
         />
 
-        <div
-          className="mt-8 xs:mt-10 sm:mt-12 space-y-12 xs:space-y-16 md:space-y-24"
-          data-oid="p8cbip8"
-        >
+        <div className="mt-8 xs:mt-10 sm:mt-12 space-y-12 xs:space-y-16 md:space-y-24">
           {steps.map((step, index) => (
             <div
               key={index}
               className={`flex flex-col ${
                 index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               } items-center gap-6 xs:gap-8 md:gap-12`}
-              data-oid="9y:z6jv"
             >
               {/* Image */}
               <motion.div
@@ -58,20 +53,15 @@ const HowItWorks = () => {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
                 className="w-full md:w-1/2"
-                data-oid="z-6co4x"
               >
-                <div className="relative" data-oid=":gvspdq">
+                <div className="relative">
                   <img
                     src={step.image}
                     alt={step.title}
                     className="w-full h-[200px] xs:h-[250px] sm:h-[300px] md:h-[400px] object-cover rounded-lg shadow-lg"
-                    data-oid="v2t_:nx"
                   />
 
-                  <div
-                    className="absolute -top-4 xs:-top-6 -left-4 xs:-left-6 bg-taupe text-white text-2xl xs:text-3xl sm:text-4xl font-bold font-heading w-12 h-12 xs:w-16 xs:h-16 flex items-center justify-center rounded-full shadow-lg"
-                    data-oid="-2d_qnu"
-                  >
+                  <div className="absolute -top-4 xs:-top-6 -left-4 xs:-left-6 bg-taupe text-white text-2xl xs:text-3xl sm:text-4xl font-bold font-heading w-12 h-12 xs:w-16 xs:h-16 flex items-center justify-center rounded-full shadow-lg">
                     {step.number}
                   </div>
                 </div>
@@ -84,25 +74,17 @@ const HowItWorks = () => {
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.6 }}
                 className="w-full md:w-1/2"
-                data-oid="l10.snh"
               >
-                <h3
-                  className="text-xl xs:text-2xl md:text-3xl font-heading font-bold mb-2 xs:mb-4 text-brown-dark dark:text-beige-light"
-                  data-oid="flhh1_d"
-                >
+                <h3 className="text-xl xs:text-2xl md:text-3xl font-heading font-bold mb-2 xs:mb-4 text-brown-dark dark:text-beige-light">
                   {step.title}
                 </h3>
-                <p
-                  className="text-sm xs:text-base sm:text-lg text-brown dark:text-beige-medium mb-4 xs:mb-6"
-                  data-oid="ylys7ae"
-                >
+                <p className="text-sm xs:text-base sm:text-lg text-brown dark:text-beige-medium mb-4 xs:mb-6">
                   {step.description}
                 </p>
                 {index === 0 && (
                   <a
                     href="/properties"
                     className="btn-primary text-xs xs:text-sm sm:text-base"
-                    data-oid="w:ufd8e"
                   >
                     Browse Properties
                   </a>
@@ -111,7 +93,6 @@ const HowItWorks = () => {
                   <a
                     href="/about#team"
                     className="btn-primary text-xs xs:text-sm sm:text-base"
-                    data-oid="pmxcrwa"
                   >
                     Meet Our Agents
                   </a>
@@ -120,7 +101,6 @@ const HowItWorks = () => {
                   <a
                     href="/contact"
                     className="btn-primary text-xs xs:text-sm sm:text-base"
-                    data-oid="dcyml:u"
                   >
                     Get Started
                   </a>

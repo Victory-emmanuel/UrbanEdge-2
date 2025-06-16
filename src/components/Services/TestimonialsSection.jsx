@@ -89,37 +89,27 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-16 bg-beige-light dark:bg-brown" data-oid="2dxk70a">
-      <div className="container mx-auto px-4" data-oid="_-899y7">
+    <section className="py-16 bg-beige-light dark:bg-brown">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
-          data-oid="ib7ocd8"
         >
-          <h2
-            className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-            data-oid="yd-jd3g"
-          >
+          <h2 className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
             Client Success Stories
           </h2>
-          <p
-            className="max-w-2xl mx-auto text-brown dark:text-beige-medium"
-            data-oid="aszyi3-"
-          >
+          <p className="max-w-2xl mx-auto text-brown dark:text-beige-medium">
             Hear from clients who have experienced the UrbanEdge difference
             across our range of services.
           </p>
         </motion.div>
 
-        <div className="relative" data-oid="wi1cjop">
+        <div className="relative">
           {/* Navigation Buttons */}
-          <div
-            className="absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block"
-            data-oid="ccb44gn"
-          >
+          <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block">
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
@@ -129,19 +119,12 @@ const TestimonialsSection = () => {
                   : "hover:bg-beige-medium dark:hover:bg-brown"
               }`}
               aria-label="Previous testimonial"
-              data-oid="k_atham"
             >
-              <ChevronLeftIcon
-                className="h-6 w-6 text-brown-dark dark:text-beige-light"
-                data-oid="49c:35_"
-              />
+              <ChevronLeftIcon className="h-6 w-6 text-brown-dark dark:text-beige-light" />
             </button>
           </div>
 
-          <div
-            className="absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block"
-            data-oid="meai69v"
-          >
+          <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 z-10 hidden md:block">
             <button
               onClick={handleNext}
               disabled={currentIndex >= maxIndex}
@@ -151,46 +134,34 @@ const TestimonialsSection = () => {
                   : "hover:bg-beige-medium dark:hover:bg-brown"
               }`}
               aria-label="Next testimonial"
-              data-oid="e5v8e7f"
             >
-              <ChevronRightIcon
-                className="h-6 w-6 text-brown-dark dark:text-beige-light"
-                data-oid="-qybhc_"
-              />
+              <ChevronRightIcon className="h-6 w-6 text-brown-dark dark:text-beige-light" />
             </button>
           </div>
 
           {/* Testimonials Container */}
-          <div className="overflow-hidden" data-oid="97g1xws">
+          <div className="overflow-hidden">
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
                 transform: `translateX(-${currentIndex * (100 / visibleCount)}%)`,
               }}
-              data-oid=".5:uu14"
             >
               {testimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
                   className="w-full sm:w-1/2 lg:w-1/3 flex-shrink-0 p-4"
-                  data-oid="ig3isae"
                 >
-                  <div
-                    className="bg-white dark:bg-brown-dark rounded-lg shadow-md p-6 h-full flex flex-col"
-                    data-oid="lv0iudb"
-                  >
+                  <div className="bg-white dark:bg-brown-dark rounded-lg shadow-md p-6 h-full flex flex-col">
                     {/* Service Tag */}
-                    <div className="mb-4" data-oid="7kgod7f">
-                      <span
-                        className="inline-block bg-taupe/20 text-taupe px-3 py-1 rounded-full text-sm font-medium"
-                        data-oid="uewyu38"
-                      >
+                    <div className="mb-4">
+                      <span className="inline-block bg-taupe/20 text-taupe px-3 py-1 rounded-full text-sm font-medium">
                         {testimonial.service}
                       </span>
                     </div>
 
                     {/* Stars */}
-                    <div className="flex mb-4" data-oid="m.9crmf">
+                    <div className="flex mb-4">
                       {[...Array(5)].map((_, i) => (
                         <StarIcon
                           key={i}
@@ -199,34 +170,26 @@ const TestimonialsSection = () => {
                               ? "text-taupe"
                               : "text-beige-medium dark:text-brown"
                           }`}
-                          data-oid=".-vvafl"
                         />
                       ))}
                     </div>
 
                     {/* Quote */}
-                    <blockquote className="mb-6 flex-grow" data-oid="qb0_to2">
-                      <p
-                        className="italic text-brown dark:text-beige-medium"
-                        data-oid="aarobia"
-                      >
+                    <blockquote className="mb-6 flex-grow">
+                      <p className="italic text-brown dark:text-beige-medium">
                         "{testimonial.quote}"
                       </p>
                     </blockquote>
 
                     {/* Author */}
-                    <div className="flex items-center" data-oid="-id8r6m">
+                    <div className="flex items-center">
                       <img
                         src={testimonial.image}
                         alt={testimonial.name}
                         className="w-12 h-12 rounded-full object-cover mr-4"
-                        data-oid="nv4l7cw"
                       />
 
-                      <p
-                        className="font-medium text-brown-dark dark:text-beige-light"
-                        data-oid="zrznl3t"
-                      >
+                      <p className="font-medium text-brown-dark dark:text-beige-light">
                         {testimonial.name}
                       </p>
                     </div>
@@ -237,10 +200,7 @@ const TestimonialsSection = () => {
           </div>
 
           {/* Mobile Navigation Dots */}
-          <div
-            className="flex justify-center mt-8 md:hidden"
-            data-oid="c.tx7s8"
-          >
+          <div className="flex justify-center mt-8 md:hidden">
             {Array.from({ length: testimonials.length - visibleCount + 1 }).map(
               (_, index) => (
                 <button
@@ -252,7 +212,6 @@ const TestimonialsSection = () => {
                       : "bg-beige-medium dark:bg-brown"
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
-                  data-oid="2cp_z86"
                 />
               ),
             )}

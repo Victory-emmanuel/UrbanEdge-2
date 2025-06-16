@@ -38,7 +38,6 @@ const ThemeToggle = ({ className = "" }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-      data-oid="11txl37"
     >
       <DarkModeSwitch
         checked={isDarkMode}
@@ -46,7 +45,6 @@ const ThemeToggle = ({ className = "" }) => {
         size={24}
         sunColor="#B9A590" // taupe
         moonColor="#F6F3EC" // beige-light
-        data-oid="rhls5r6"
       />
     </motion.button>
   );

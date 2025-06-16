@@ -95,38 +95,17 @@ const PropertyDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12" data-oid="ifo6ork">
-        <div className="animate-pulse" data-oid="yj:a6_g">
-          <div
-            className="h-[500px] bg-beige-medium dark:bg-brown rounded-lg mb-8"
-            data-oid="xfgn1vn"
-          ></div>
-          <div
-            className="h-8 bg-beige-medium dark:bg-brown rounded w-3/4 mb-4"
-            data-oid="ylkx0de"
-          ></div>
-          <div
-            className="h-6 bg-beige-medium dark:bg-brown rounded w-1/2 mb-8"
-            data-oid="2_sqg7b"
-          ></div>
-          <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            data-oid="hw1_tg0"
-          >
-            <div className="md:col-span-2" data-oid="ihhvjv3">
-              <div
-                className="h-40 bg-beige-medium dark:bg-brown rounded mb-8"
-                data-oid="6b4imak"
-              ></div>
-              <div
-                className="h-80 bg-beige-medium dark:bg-brown rounded"
-                data-oid="u.djikf"
-              ></div>
+      <div className="container mx-auto px-4 py-12">
+        <div className="animate-pulse">
+          <div className="h-[500px] bg-beige-medium dark:bg-brown rounded-lg mb-8"></div>
+          <div className="h-8 bg-beige-medium dark:bg-brown rounded w-3/4 mb-4"></div>
+          <div className="h-6 bg-beige-medium dark:bg-brown rounded w-1/2 mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-2">
+              <div className="h-40 bg-beige-medium dark:bg-brown rounded mb-8"></div>
+              <div className="h-80 bg-beige-medium dark:bg-brown rounded"></div>
             </div>
-            <div
-              className="h-96 bg-beige-medium dark:bg-brown rounded"
-              data-oid="otpbcsd"
-            ></div>
+            <div className="h-96 bg-beige-medium dark:bg-brown rounded"></div>
           </div>
         </div>
       </div>
@@ -135,23 +114,14 @@ const PropertyDetailPage = () => {
 
   if (error || !property) {
     return (
-      <div
-        className="container mx-auto px-4 py-12 text-center"
-        data-oid="1n39_4q"
-      >
-        <h2
-          className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-4"
-          data-oid="7znd5tx"
-        >
+      <div className="container mx-auto px-4 py-12 text-center">
+        <h2 className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-4">
           {error || "Property Not Found"}
         </h2>
-        <p
-          className="text-brown dark:text-beige-medium mb-6"
-          data-oid="mvio18i"
-        >
+        <p className="text-brown dark:text-beige-medium mb-6">
           The property you're looking for doesn't exist or has been removed.
         </p>
-        <Link to="/properties" className="btn-primary" data-oid="888_.k3">
+        <Link to="/properties" className="btn-primary">
           Browse Properties
         </Link>
       </div>
@@ -175,120 +145,91 @@ const PropertyDetailPage = () => {
 
   return (
     <>
-      <Helmet data-oid="ep3z:5s">
-        <title data-oid="k9k.nx8">
-          {property.title} | UrbanEdge Real Estate
-        </title>
+      <Helmet>
+        <title>{property?.title || "Property Details"} | UrbanEdge Real Estate</title>
         <meta
           name="description"
-          content={`${property.title} - ${property.location}. ${property.bedrooms} bedrooms, ${property.bathrooms} bathrooms, ${property.square_feet} sqft. Offered at $${property.price?.toLocaleString() || "N/A"}.`}
-          data-oid="h--5rqc"
+          content={`${property?.title || "Property"} - ${property?.location || "Location"}. ${property?.bedrooms || 0} bedrooms, ${property?.bathrooms || 0} bathrooms, ${property?.square_feet || 0} sqft. Offered at $${property?.price?.toLocaleString() || "N/A"}.`}
         />
       </Helmet>
 
-      <div className="bg-beige-light dark:bg-brown" data-oid="3g7.n39">
-        <div className="container mx-auto px-4 py-12" data-oid="c0q60x4">
+      <div className="bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4 py-12">
           {/* Back Button */}
-          <div className="mb-6" data-oid="u.566s5">
+          <div className="mb-6">
             <Link
               to="/properties"
               className="inline-flex items-center text-brown-dark dark:text-beige-light hover:text-taupe dark:hover:text-beige-medium transition-colors"
-              data-oid="fxv4za0"
             >
-              <ArrowLeftIcon className="h-5 w-5 mr-2" data-oid="1f4s0b2" />
+              <ArrowLeftIcon className="h-5 w-5 mr-2" />
               Back to Properties
             </Link>
           </div>
 
           {/* Property Gallery */}
-          <div className="mb-8" data-oid="3kts7aa">
+          <div className="mb-8">
             <PropertyGallery
               images={property.images?.map((img) => ({
-                url: img.url,
-                alt: property.title,
+                url: img.url || img.image_url,
+                alt: property.title || "Property image",
+              })) || property.property_images?.map((img) => ({
+                url: img.image_url || img.url,
+                alt: property.title || "Property image",
               }))}
-              data-oid=":8.b8_5"
             />
           </div>
 
           {/* Property Header */}
-          <div className="mb-8" data-oid="bh6l35r">
-            <div
-              className="flex flex-wrap items-start justify-between gap-4"
-              data-oid="ythmn9g"
-            >
-              <div data-oid="96aabel">
-                <h1
-                  className="text-3xl md:text-4xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2"
-                  data-oid="e8_o8f1"
-                >
+          <div className="mb-8">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2">
                   {property.title}
                 </h1>
-                <p
-                  className="text-lg text-brown dark:text-beige-medium mb-2"
-                  data-oid="a0c4n5g"
-                >
+                <p className="text-lg text-brown dark:text-beige-medium mb-2">
                   {property.location}
                 </p>
-                <p
-                  className="text-2xl font-heading font-bold text-taupe"
-                  data-oid="siypejz"
-                >
+                <p className="text-2xl font-heading font-bold text-taupe">
                   ${property.price?.toLocaleString() || "N/A"}
                 </p>
               </div>
-              <div className="flex space-x-3" data-oid="nk3lkkx">
+              <div className="flex space-x-3">
                 <button
                   onClick={toggleFavorite}
                   className="p-3 bg-white dark:bg-brown-dark rounded-full shadow-md hover:shadow-lg transition-shadow"
                   aria-label={
                     isFavorite ? "Remove from favorites" : "Add to favorites"
                   }
-                  data-oid="2dv-2lf"
                 >
                   {isFavorite ? (
-                    <HeartIconSolid
-                      className="h-6 w-6 text-destructive"
-                      data-oid="n7occkq"
-                    />
+                    <HeartIconSolid className="h-6 w-6 text-destructive" />
                   ) : (
-                    <HeartIcon
-                      className="h-6 w-6 text-brown-dark dark:text-beige-light"
-                      data-oid="0hek66t"
-                    />
+                    <HeartIcon className="h-6 w-6 text-brown-dark dark:text-beige-light" />
                   )}
                 </button>
                 <button
                   onClick={handleShare}
                   className="p-3 bg-white dark:bg-brown-dark rounded-full shadow-md hover:shadow-lg transition-shadow"
                   aria-label="Share property"
-                  data-oid="y9nfdcs"
                 >
-                  <ShareIcon
-                    className="h-6 w-6 text-brown-dark dark:text-beige-light"
-                    data-oid="3r8i8pa"
-                  />
+                  <ShareIcon className="h-6 w-6 text-brown-dark dark:text-beige-light" />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Property Features */}
-          <div className="mb-12" data-oid="5_a5b7b">
+          <div className="mb-12">
             <PropertyFeatures
               features={propertyFeatures}
               amenities={amenities}
-              data-oid="2-c0l8h"
             />
           </div>
 
           {/* Main Content */}
-          <div
-            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-            data-oid="sz1v6ld"
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Property Details */}
-            <div className="lg:col-span-2" data-oid="ombi0h0">
+            <div className="lg:col-span-2">
               <PropertyTabs
                 property={{
                   description: property.description,
@@ -311,17 +252,15 @@ const PropertyDetailPage = () => {
                   },
                   reviews: [],
                 }}
-                data-oid="5mj08af"
               />
             </div>
 
             {/* Right Column - Contact Form & Mortgage Calculator */}
-            <div className="space-y-8" data-oid="5n7al72">
+            <div className="space-y-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                data-oid="hlay-6f"
               >
                 <PropertyContactForm
                   agent={
@@ -335,23 +274,16 @@ const PropertyDetailPage = () => {
                     }
                   }
                   propertyTitle={property.title}
-                  data-oid="_qnyyg."
                 />
               </motion.div>
 
-              <PropertyMortgageCalculator
-                propertyPrice={property.price}
-                data-oid="k7-_p1e"
-              />
+              <PropertyMortgageCalculator propertyPrice={property.price} />
             </div>
           </div>
 
           {/* Similar Properties */}
           {similarProperties.length > 0 && (
-            <SimilarProperties
-              properties={similarProperties}
-              data-oid="zkmnqgo"
-            />
+            <SimilarProperties properties={similarProperties} />
           )}
         </div>
       </div>

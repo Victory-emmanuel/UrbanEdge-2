@@ -58,36 +58,26 @@ const partners = [
 
 const AwardsSection = () => {
   return (
-    <section className="py-16 bg-beige-light dark:bg-brown" data-oid="4m8kfsu">
-      <div className="container mx-auto px-4" data-oid="5ovq2eg">
+    <section className="py-16 bg-beige-light dark:bg-brown">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
-          data-oid="pbm8_1o"
         >
-          <h2
-            className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-            data-oid="91pv_-t"
-          >
+          <h2 className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
             Awards & Recognition
           </h2>
-          <p
-            className="max-w-2xl mx-auto text-brown dark:text-beige-medium"
-            data-oid="53wit-f"
-          >
+          <p className="max-w-2xl mx-auto text-brown dark:text-beige-medium">
             Our commitment to excellence has been recognized by leading
             organizations in the real estate industry.
           </p>
         </motion.div>
 
         {/* Awards */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
-          data-oid="n.:4pab"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {awards.map((award, index) => (
             <motion.div
               key={index}
@@ -96,29 +86,19 @@ const AwardsSection = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white dark:bg-brown-dark p-6 rounded-lg shadow-md text-center"
-              data-oid="bx0z3be"
             >
-              <div className="mb-4 flex justify-center" data-oid="le8x4gx">
+              <div className="mb-4 flex justify-center">
                 <img
                   src={award.logo}
                   alt={award.organization}
                   className="h-16 w-auto"
-                  data-oid="._nqipd"
                 />
               </div>
-              <h3
-                className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2"
-                data-oid="0zxf7-b"
-              >
+              <h3 className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light mb-2">
                 {award.title}
               </h3>
-              <p className="text-taupe mb-1" data-oid="3kzp8w7">
-                {award.organization}
-              </p>
-              <p
-                className="text-sm text-brown dark:text-beige-medium"
-                data-oid="6w5lk-t"
-              >
+              <p className="text-taupe mb-1">{award.organization}</p>
+              <p className="text-sm text-brown dark:text-beige-medium">
                 {award.year}
               </p>
             </motion.div>
@@ -132,27 +112,17 @@ const AwardsSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-8"
-          data-oid="cwe.o3-"
         >
-          <h2
-            className="text-2xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-            data-oid="2:xtudb"
-          >
+          <h2 className="text-2xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
             Our Partners
           </h2>
-          <p
-            className="max-w-2xl mx-auto text-brown dark:text-beige-medium"
-            data-oid="yq3mjrb"
-          >
+          <p className="max-w-2xl mx-auto text-brown dark:text-beige-medium">
             We collaborate with industry leaders to provide exceptional service
             and opportunities for our clients.
           </p>
         </motion.div>
 
-        <div
-          className="flex flex-wrap justify-center items-center gap-8"
-          data-oid="3vfv96v"
-        >
+        <div className="flex flex-wrap justify-center items-center gap-8">
           {partners.map((partner, index) => (
             <motion.div
               key={index}
@@ -161,13 +131,11 @@ const AwardsSection = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="grayscale hover:grayscale-0 transition-all duration-300"
-              data-oid=":7k_1wo"
             >
               <img
                 src={partner.logo}
                 alt={partner.name}
                 className="h-12 w-auto"
-                data-oid=".w:2wuo"
               />
             </motion.div>
           ))}

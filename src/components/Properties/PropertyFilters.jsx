@@ -87,15 +87,14 @@ const PropertyFilters = ({
   };
 
   return (
-    <div className={`relative ${className}`} data-oid="580erb_">
+    <div className={`relative ${className}`}>
       {/* Mobile Filter Toggle */}
-      <div className="md:hidden mb-4" data-oid="-u96sb2">
+      <div className="md:hidden mb-4">
         <button
           onClick={toggleFilters}
           className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-white dark:bg-brown-dark rounded-lg shadow-md text-brown-dark dark:text-beige-light"
-          data-oid="b38.7q_"
         >
-          <AdjustmentsHorizontalIcon className="h-5 w-5" data-oid="_2y-rlj" />
+          <AdjustmentsHorizontalIcon className="h-5 w-5" />
           {isOpen ? "Hide Filters" : "Show Filters"}
         </button>
       </div>
@@ -111,34 +110,25 @@ const PropertyFilters = ({
           height: isOpen || window.innerWidth >= 768 ? "auto" : 0,
         }}
         transition={{ duration: 0.3 }}
-        data-oid="g-5b9ci"
       >
-        <div
-          className="flex justify-between items-center mb-4"
-          data-oid="vqa_e:g"
-        >
-          <h3
-            className="text-lg font-heading font-semibold text-brown-dark dark:text-beige-light"
-            data-oid="onw_sf5"
-          >
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-heading font-semibold text-brown-dark dark:text-beige-light">
             Filters
           </h3>
           <button
             onClick={toggleFilters}
             className="md:hidden text-brown-dark dark:text-beige-light"
-            data-oid="e37ljeu"
           >
-            <XMarkIcon className="h-5 w-5" data-oid="1cziszf" />
+            <XMarkIcon className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="space-y-4" data-oid="d7qz-14">
+        <div className="space-y-4">
           {/* Location */}
-          <div data-oid="ln6co.c">
+          <div>
             <label
               htmlFor="location"
               className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid=".ausoj3"
             >
               Location
             </label>
@@ -150,19 +140,15 @@ const PropertyFilters = ({
               className="input"
               value={filters.location}
               onChange={handleInputChange}
-              data-oid="zuoyykg"
             />
           </div>
 
           {/* Price Range */}
-          <div data-oid="ze97cwu">
-            <label
-              className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid="obp3nbq"
-            >
+          <div>
+            <label className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1">
               Price Range
             </label>
-            <div className="flex items-center space-x-2" data-oid="hj.thw9">
+            <div className="flex items-center space-x-2">
               <input
                 type="number"
                 name="minPrice"
@@ -170,15 +156,9 @@ const PropertyFilters = ({
                 className="input"
                 value={filters.minPrice}
                 onChange={handleInputChange}
-                data-oid="bfohuwt"
               />
 
-              <span
-                className="text-brown-dark dark:text-beige-light"
-                data-oid="xv-ik67"
-              >
-                -
-              </span>
+              <span className="text-brown-dark dark:text-beige-light">-</span>
               <input
                 type="number"
                 name="maxPrice"
@@ -186,18 +166,16 @@ const PropertyFilters = ({
                 className="input"
                 value={filters.maxPrice}
                 onChange={handleInputChange}
-                data-oid="9c04.sb"
               />
             </div>
           </div>
 
           {/* Bedrooms & Bathrooms */}
-          <div className="grid grid-cols-2 gap-4" data-oid="bps7us:">
-            <div data-oid="k:bsjgu">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
               <label
                 htmlFor="minBedrooms"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="ju0aat_"
               >
                 Bedrooms (Min)
               </label>
@@ -207,33 +185,19 @@ const PropertyFilters = ({
                 className="input"
                 value={filters.minBedrooms}
                 onChange={handleInputChange}
-                data-oid="sfuxcfv"
               >
-                <option value="" data-oid="bsj980s">
-                  Any
-                </option>
-                <option value="1" data-oid="v3dfh:n">
-                  1+
-                </option>
-                <option value="2" data-oid="s69wpv8">
-                  2+
-                </option>
-                <option value="3" data-oid="z2yt8._">
-                  3+
-                </option>
-                <option value="4" data-oid="1899vz.">
-                  4+
-                </option>
-                <option value="5" data-oid="mgtwqmw">
-                  5+
-                </option>
+                <option value="">Any</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+                <option value="5">5+</option>
               </select>
             </div>
-            <div data-oid="8o-:2fi">
+            <div>
               <label
                 htmlFor="minBathrooms"
                 className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-                data-oid="ja9yk_g"
               >
                 Bathrooms (Min)
               </label>
@@ -243,36 +207,22 @@ const PropertyFilters = ({
                 className="input"
                 value={filters.minBathrooms}
                 onChange={handleInputChange}
-                data-oid="4q0j8g0"
               >
-                <option value="" data-oid="ji2jx6:">
-                  Any
-                </option>
-                <option value="1" data-oid="-bs:i4y">
-                  1+
-                </option>
-                <option value="2" data-oid=".ribdst">
-                  2+
-                </option>
-                <option value="3" data-oid="6xk10dm">
-                  3+
-                </option>
-                <option value="4" data-oid="megg2v:">
-                  4+
-                </option>
-                <option value="5" data-oid="qdi34_o">
-                  5+
-                </option>
+                <option value="">Any</option>
+                <option value="1">1+</option>
+                <option value="2">2+</option>
+                <option value="3">3+</option>
+                <option value="4">4+</option>
+                <option value="5">5+</option>
               </select>
             </div>
           </div>
 
           {/* Property Type */}
-          <div data-oid="bwxo.yw">
+          <div>
             <label
               htmlFor="propertyType"
               className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid="0tkfbpk"
             >
               Property Type
             </label>
@@ -282,10 +232,9 @@ const PropertyFilters = ({
               className="input"
               value={filters.propertyType}
               onChange={handleInputChange}
-              data-oid="-maypr6"
             >
               {propertyTypes.map((type) => (
-                <option key={type.id} value={type.id} data-oid="2.88-qu">
+                <option key={type.id} value={type.id}>
                   {type.name}
                 </option>
               ))}
@@ -293,11 +242,10 @@ const PropertyFilters = ({
           </div>
 
           {/* Sale Type */}
-          <div data-oid="0r4blyi">
+          <div>
             <label
               htmlFor="saleType"
               className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-1"
-              data-oid="31xcq-2"
             >
               Sale Type
             </label>
@@ -307,10 +255,9 @@ const PropertyFilters = ({
               className="input"
               value={filters.saleType}
               onChange={handleInputChange}
-              data-oid="w5rtm8f"
             >
               {saleTypes.map((type) => (
-                <option key={type.id} value={type.id} data-oid="utwx3pd">
+                <option key={type.id} value={type.id}>
                   {type.name}
                 </option>
               ))}
@@ -318,20 +265,13 @@ const PropertyFilters = ({
           </div>
 
           {/* Features */}
-          <div data-oid="5:3yvq6">
-            <p
-              className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-2"
-              data-oid="blyp_x1"
-            >
+          <div>
+            <p className="block text-sm font-medium text-brown-dark dark:text-beige-light mb-2">
               Features
             </p>
-            <div className="grid grid-cols-2 gap-2" data-oid="jci5l3s">
+            <div className="grid grid-cols-2 gap-2">
               {features.map((feature) => (
-                <div
-                  key={feature.id}
-                  className="flex items-center"
-                  data-oid="r5hq2yb"
-                >
+                <div key={feature.id} className="flex items-center">
                   <input
                     type="checkbox"
                     id={`feature-${feature.id}`}
@@ -339,13 +279,11 @@ const PropertyFilters = ({
                     checked={filters.features.includes(feature.id)}
                     onChange={handleCheckboxChange}
                     className="h-4 w-4 text-taupe border-taupe rounded focus:ring-taupe"
-                    data-oid="-uqak-b"
                   />
 
                   <label
                     htmlFor={`feature-${feature.id}`}
                     className="ml-2 text-sm text-brown-dark dark:text-beige-light"
-                    data-oid=":m87tjq"
                   >
                     {feature.name}
                   </label>
@@ -355,22 +293,11 @@ const PropertyFilters = ({
           </div>
 
           {/* Action Buttons */}
-          <div
-            className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-beige-medium dark:border-brown"
-            data-oid="_:5zlq3"
-          >
-            <button
-              onClick={handleApplyFilters}
-              className="btn-primary flex-1"
-              data-oid="8lks7-p"
-            >
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-beige-medium dark:border-brown">
+            <button onClick={handleApplyFilters} className="btn-primary flex-1">
               Apply Filters
             </button>
-            <button
-              onClick={handleResetFilters}
-              className="btn-outline flex-1"
-              data-oid="k4en9dq"
-            >
+            <button onClick={handleResetFilters} className="btn-outline flex-1">
               Reset
             </button>
           </div>

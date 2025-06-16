@@ -54,14 +54,8 @@ const Register = () => {
   };
 
   return (
-    <div
-      className="max-w-md mx-auto my-12 p-8 bg-white dark:bg-brown-dark shadow-lg rounded-lg"
-      data-oid="v5jvqx0"
-    >
-      <h1
-        className="text-2xl font-bold text-center mb-6 text-brown-dark dark:text-beige-light"
-        data-oid="8_jpbf8"
-      >
+    <div className="max-w-md mx-auto my-12 p-8 bg-white dark:bg-brown-dark shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold text-center mb-6 text-brown-dark dark:text-beige-light">
         Create an Account
       </h1>
 
@@ -69,11 +63,8 @@ const Register = () => {
         <div
           className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
           role="alert"
-          data-oid="p.1.r3k"
         >
-          <span className="block sm:inline" data-oid="pdm7gy1">
-            {error}
-          </span>
+          <span className="block sm:inline">{error}</span>
         </div>
       )}
 
@@ -81,20 +72,16 @@ const Register = () => {
         <div
           className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4"
           role="alert"
-          data-oid="97t6_v8"
         >
-          <span className="block sm:inline" data-oid="-2z9mli">
-            {successMessage}
-          </span>
+          <span className="block sm:inline">{successMessage}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6" data-oid="nphy2ja">
-        <div data-oid="4lda9io">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
           <label
             htmlFor="email"
             className="block text-sm font-medium text-brown dark:text-beige-medium mb-1"
-            data-oid="3p10_-z"
           >
             Email Address
           </label>
@@ -106,15 +93,13 @@ const Register = () => {
             required
             className="input w-full"
             placeholder="your@email.com"
-            data-oid="hoj0ziu"
           />
         </div>
 
-        <div data-oid="r:zkz74">
+        <div>
           <label
             htmlFor="password"
             className="block text-sm font-medium text-brown dark:text-beige-medium mb-1"
-            data-oid="fj7i5w9"
           >
             Password
           </label>
@@ -126,22 +111,17 @@ const Register = () => {
             required
             className="input w-full"
             placeholder="••••••••"
-            data-oid="_jyczr7"
           />
 
-          <p
-            className="mt-1 text-xs text-brown-light dark:text-beige-medium"
-            data-oid="bv7n7kz"
-          >
+          <p className="mt-1 text-xs text-brown-light dark:text-beige-medium">
             Password must be at least 6 characters
           </p>
         </div>
 
-        <div data-oid="4v0em6m">
+        <div>
           <label
             htmlFor="confirm-password"
             className="block text-sm font-medium text-brown dark:text-beige-medium mb-1"
-            data-oid="33uji:b"
           >
             Confirm Password
           </label>
@@ -153,30 +133,26 @@ const Register = () => {
             required
             className="input w-full"
             placeholder="••••••••"
-            data-oid="cj1tzb9"
           />
         </div>
 
-        <div className="flex items-center" data-oid="2s6f59z">
+        <div className="flex items-center">
           <input
             id="terms"
             name="terms"
             type="checkbox"
             required
             className="h-4 w-4 text-taupe focus:ring-taupe border-gray-300 rounded"
-            data-oid="r3lma1q"
           />
 
           <label
             htmlFor="terms"
             className="ml-2 block text-sm text-brown dark:text-beige-medium"
-            data-oid="6sbv-m2"
           >
             I agree to the{" "}
             <a
               href="#"
               className="font-medium text-taupe hover:text-brown-dark dark:hover:text-beige-light"
-              data-oid="j-tvs86"
             >
               Terms of Service
             </a>{" "}
@@ -184,28 +160,25 @@ const Register = () => {
             <a
               href="#"
               className="font-medium text-taupe hover:text-brown-dark dark:hover:text-beige-light"
-              data-oid="i9:.ss2"
             >
               Privacy Policy
             </a>
           </label>
         </div>
 
-        <div data-oid="def9ig_">
+        <div>
           <button
             type="submit"
             disabled={loading}
             className="btn-primary w-full flex justify-center"
-            data-oid="_1ub93j"
           >
             {loading ? (
-              <span className="flex items-center" data-oid="ytvdhjs">
+              <span className="flex items-center">
                 <svg
                   className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  data-oid=":lh362t"
                 >
                   <circle
                     className="opacity-25"
@@ -214,13 +187,11 @@ const Register = () => {
                     r="10"
                     stroke="currentColor"
                     strokeWidth="4"
-                    data-oid="j0m-.1-"
                   ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    data-oid="_upbvga"
                   ></path>
                 </svg>
                 Creating account...
@@ -232,16 +203,12 @@ const Register = () => {
         </div>
       </form>
 
-      <div className="mt-6 text-center" data-oid="464-s5y">
-        <p
-          className="text-sm text-brown dark:text-beige-medium"
-          data-oid="zrixtwb"
-        >
+      <div className="mt-6 text-center">
+        <p className="text-sm text-brown dark:text-beige-medium">
           Already have an account?{" "}
           <Link
             to="/login"
             className="font-medium text-taupe hover:text-brown-dark dark:hover:text-beige-light"
-            data-oid="mrcqsuf"
           >
             Sign in
           </Link>

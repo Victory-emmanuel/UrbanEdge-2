@@ -37,84 +37,54 @@ const ContactInfo = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      data-oid="u7s9xsy"
     >
-      <h2
-        className="text-2xl font-heading font-bold mb-6 text-brown-dark dark:text-beige-light"
-        data-oid="m9ygop5"
-      >
+      <h2 className="text-2xl font-heading font-bold mb-6 text-brown-dark dark:text-beige-light">
         Our Offices
       </h2>
 
-      <div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        data-oid="j6sui0o"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {officeLocations.map((office, index) => (
           <div
             key={index}
             className="bg-white dark:bg-brown-dark rounded-lg shadow-lg p-6"
-            data-oid="w4grpp6"
           >
-            <h3
-              className="text-xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-              data-oid="f7yt11z"
-            >
+            <h3 className="text-xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
               {office.name}
             </h3>
 
-            <div
-              className="space-y-4 text-brown dark:text-beige-medium"
-              data-oid=":ygpvk8"
-            >
-              <div className="flex" data-oid="qr98xz6">
-                <MapPinIcon
-                  className="h-6 w-6 text-taupe flex-shrink-0 mr-3"
-                  data-oid="zo2cert"
-                />
+            <div className="space-y-4 text-brown dark:text-beige-medium">
+              <div className="flex">
+                <MapPinIcon className="h-6 w-6 text-taupe flex-shrink-0 mr-3" />
 
-                <span data-oid="9uu-27u">{office.address}</span>
+                <span>{office.address}</span>
               </div>
 
-              <div className="flex" data-oid="0rzaq7g">
-                <PhoneIcon
-                  className="h-6 w-6 text-taupe flex-shrink-0 mr-3"
-                  data-oid=":.ymp6r"
-                />
+              <div className="flex">
+                <PhoneIcon className="h-6 w-6 text-taupe flex-shrink-0 mr-3" />
 
                 <a
                   href={`tel:${office.phone}`}
                   className="hover:text-taupe transition-colors"
-                  data-oid="z9fyr76"
                 >
                   {office.phone}
                 </a>
               </div>
 
-              <div className="flex" data-oid="wan6bfl">
-                <EnvelopeIcon
-                  className="h-6 w-6 text-taupe flex-shrink-0 mr-3"
-                  data-oid="beefeld"
-                />
+              <div className="flex">
+                <EnvelopeIcon className="h-6 w-6 text-taupe flex-shrink-0 mr-3" />
 
                 <a
                   href={`mailto:${office.email}`}
                   className="hover:text-taupe transition-colors"
-                  data-oid="n.is809"
                 >
                   {office.email}
                 </a>
               </div>
 
-              <div className="flex" data-oid="jy22b36">
-                <ClockIcon
-                  className="h-6 w-6 text-taupe flex-shrink-0 mr-3"
-                  data-oid=":ayv:xw"
-                />
+              <div className="flex">
+                <ClockIcon className="h-6 w-6 text-taupe flex-shrink-0 mr-3" />
 
-                <div className="whitespace-pre-line" data-oid="i2djrwm">
-                  {office.hours}
-                </div>
+                <div className="whitespace-pre-line">{office.hours}</div>
               </div>
             </div>
           </div>

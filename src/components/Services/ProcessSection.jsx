@@ -35,40 +35,30 @@ const steps = [
 
 const ProcessSection = () => {
   return (
-    <section className="py-16 bg-white dark:bg-brown-dark" data-oid="j7fjheo">
-      <div className="container mx-auto px-4" data-oid="zsukayp">
+    <section className="py-16 bg-white dark:bg-brown-dark">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
-          data-oid="b2k1mh6"
         >
-          <h2
-            className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light"
-            data-oid=":cow08x"
-          >
+          <h2 className="text-3xl font-heading font-bold mb-4 text-brown-dark dark:text-beige-light">
             Our Process
           </h2>
-          <p
-            className="max-w-2xl mx-auto text-brown dark:text-beige-medium"
-            data-oid="fmwwyrh"
-          >
+          <p className="max-w-2xl mx-auto text-brown dark:text-beige-medium">
             We follow a structured approach to ensure exceptional results for
             every client, regardless of which service you choose.
           </p>
         </motion.div>
 
-        <div className="relative" data-oid="k2w7b:o">
+        <div className="relative">
           {/* Timeline Line */}
-          <div
-            className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-taupe transform -translate-x-1/2"
-            data-oid="f9m59kp"
-          ></div>
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-taupe transform -translate-x-1/2"></div>
 
           {/* Steps */}
-          <div className="space-y-12 md:space-y-0" data-oid="-z-iz1e">
+          <div className="space-y-12 md:space-y-0">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
@@ -79,70 +69,44 @@ const ProcessSection = () => {
                 className={`md:flex items-center ${
                   index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
-                data-oid="2lszb03"
               >
                 {/* Step Number (Mobile) */}
-                <div
-                  className="md:hidden flex items-center mb-4"
-                  data-oid="x9y8xy."
-                >
-                  <div
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-taupe text-white text-xl font-bold"
-                    data-oid="ibkr5wr"
-                  >
+                <div className="md:hidden flex items-center mb-4">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-taupe text-white text-xl font-bold">
                     {step.number}
                   </div>
-                  <div className="ml-4" data-oid="n3drnr_">
-                    <h3
-                      className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light"
-                      data-oid="ik9cl6v"
-                    >
+                  <div className="ml-4">
+                    <h3 className="text-xl font-heading font-bold text-brown-dark dark:text-beige-light">
                       {step.title}
                     </h3>
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="md:w-5/12" data-oid="7_rq8my">
+                <div className="md:w-5/12">
                   <div
                     className={`p-6 bg-beige-light dark:bg-brown rounded-lg shadow-md ${
                       index % 2 === 0 ? "md:text-right" : "md:text-left"
                     }`}
-                    data-oid="qkciewn"
                   >
-                    <h3
-                      className="hidden md:block text-xl font-heading font-bold mb-3 text-brown-dark dark:text-beige-light"
-                      data-oid="5n:1pj5"
-                    >
+                    <h3 className="hidden md:block text-xl font-heading font-bold mb-3 text-brown-dark dark:text-beige-light">
                       {step.title}
                     </h3>
-                    <p
-                      className="text-brown dark:text-beige-medium"
-                      data-oid="hfi_z-1"
-                    >
+                    <p className="text-brown dark:text-beige-medium">
                       {step.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Step Number (Desktop) */}
-                <div
-                  className="hidden md:flex md:w-2/12 justify-center"
-                  data-oid="yajgmr0"
-                >
-                  <div
-                    className="flex items-center justify-center w-16 h-16 rounded-full bg-taupe text-white text-2xl font-bold z-10"
-                    data-oid="anpmsg5"
-                  >
+                <div className="hidden md:flex md:w-2/12 justify-center">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-taupe text-white text-2xl font-bold z-10">
                     {step.number}
                   </div>
                 </div>
 
                 {/* Empty Space for Alternating Layout */}
-                <div
-                  className="hidden md:block md:w-5/12"
-                  data-oid="c6yusw4"
-                ></div>
+                <div className="hidden md:block md:w-5/12"></div>
               </motion.div>
             ))}
           </div>
