@@ -33,9 +33,7 @@ const PropertyDetailPage = () => {
 
       try {
         // Fetch property details
-        const { data, error } = await propertyService.getPropertyById(
-          parseInt(id),
-        );
+        const { data, error } = await propertyService.getPropertyById(id);
 
         if (error) {
           throw new Error(error.message || "Failed to fetch property details");
@@ -45,15 +43,26 @@ const PropertyDetailPage = () => {
           throw new Error("Property not found");
         }
 
-        setProperty(data);
+        console.log('PropertyDetailPage: Fetched property data:', data);
+
+        // Handle the nested structure returned by get_property_details
+        const propertyData = data.property || data;
+        const propertyWithImages = {
+          ...propertyData,
+          images: data.images || [],
+          features: data.features || []
+        };
+
+        setProperty(propertyWithImages);
 
         // Fetch similar properties based on property type
-        if (data.property_type_id) {
+        const propertyTypeId = propertyData.property_type_id || data.property_type_id;
+        if (propertyTypeId) {
           const similarParams = {
-            property_type_ids: [data.property_type_id],
+            property_type_ids: [propertyTypeId],
             limit_val: 4,
             offset_val: 0,
-            exclude_property_id: parseInt(id),
+            exclude_property_id: id,
           };
 
           const { data: similarData } =
@@ -277,7 +286,7 @@ const PropertyDetailPage = () => {
                 />
               </motion.div>
 
-              <PropertyMortgageCalculator propertyPrice={property.price} />
+              <PropertyMortgageCalculator propertyPrice={property?.price || 0} />
             </div>
           </div>
 

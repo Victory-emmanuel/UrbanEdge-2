@@ -2,13 +2,24 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const PropertyMortgageCalculator = ({ propertyPrice }) => {
-  const [loanAmount, setLoanAmount] = useState(Math.round(propertyPrice * 0.8));
+  // Ensure propertyPrice is a valid number, default to 0 if not
+  const validPropertyPrice = propertyPrice && !isNaN(propertyPrice) ? propertyPrice : 0;
+
+  const [loanAmount, setLoanAmount] = useState(Math.round(validPropertyPrice * 0.8));
   const [downPayment, setDownPayment] = useState(
-    Math.round(propertyPrice * 0.2),
+    Math.round(validPropertyPrice * 0.2),
   );
   const [interestRate, setInterestRate] = useState(4.5);
   const [loanTerm, setLoanTerm] = useState(30);
   const [monthlyPayment, setMonthlyPayment] = useState(0);
+
+  // Update calculator values when propertyPrice changes (when property data loads)
+  useEffect(() => {
+    if (propertyPrice && !isNaN(propertyPrice) && propertyPrice > 0) {
+      setLoanAmount(Math.round(propertyPrice * 0.8));
+      setDownPayment(Math.round(propertyPrice * 0.2));
+    }
+  }, [propertyPrice]);
 
   // Calculate monthly payment whenever inputs change
   useEffect(() => {
@@ -36,13 +47,15 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
   const handleDownPaymentChange = (e) => {
     const value = parseFloat(e.target.value) || 0;
     setDownPayment(value);
-    setLoanAmount(propertyPrice - value);
+    const validPrice = propertyPrice && !isNaN(propertyPrice) ? propertyPrice : 0;
+    setLoanAmount(Math.max(0, validPrice - value));
   };
 
   const handleLoanAmountChange = (e) => {
     const value = parseFloat(e.target.value) || 0;
     setLoanAmount(value);
-    setDownPayment(propertyPrice - value);
+    const validPrice = propertyPrice && !isNaN(propertyPrice) ? propertyPrice : 0;
+    setDownPayment(Math.max(0, validPrice - value));
   };
 
   const formatCurrency = (value) => {
@@ -73,7 +86,7 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
           </label>
           <input
             type="text"
-            value={formatCurrency(propertyPrice)}
+            value={formatCurrency(validPropertyPrice)}
             className="input bg-beige-light dark:bg-brown cursor-not-allowed"
             disabled
           />
@@ -93,14 +106,14 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             value={downPayment}
             onChange={handleDownPaymentChange}
             min="0"
-            max={propertyPrice}
+            max={validPropertyPrice || 999999999}
             step="1000"
             className="input"
           />
 
           <div className="mt-2 flex justify-between text-xs text-brown dark:text-beige-medium">
             <span>
-              {Math.round((downPayment / propertyPrice) * 100)}% of property
+              {validPropertyPrice > 0 ? Math.round((downPayment / validPropertyPrice) * 100) : 0}% of property
               price
             </span>
             <span>{formatCurrency(downPayment)}</span>
@@ -121,7 +134,7 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
             value={loanAmount}
             onChange={handleLoanAmountChange}
             min="0"
-            max={propertyPrice}
+            max={validPropertyPrice || 999999999}
             step="1000"
             className="input"
           />

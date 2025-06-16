@@ -49,7 +49,7 @@ const PropertyFilters = ({
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
-    const featureId = parseInt(name);
+    const featureId = name; // Keep as string UUID, don't convert to integer
 
     const updatedFeatures = checked
       ? [...filters.features, featureId]
@@ -275,7 +275,7 @@ const PropertyFilters = ({
                   <input
                     type="checkbox"
                     id={`feature-${feature.id}`}
-                    name={feature.id.toString()}
+                    name={feature.id}
                     checked={filters.features.includes(feature.id)}
                     onChange={handleCheckboxChange}
                     className="h-4 w-4 text-taupe border-taupe rounded focus:ring-taupe"

@@ -12,21 +12,62 @@ const PropertyCard = ({ property }) => {
     // Here you would typically call an API to save the favorite status
   };
 
+  // Helper function to get the first image URL
+  const getImageUrl = () => {
+    // Handle different image URL field names
+    if (property.thumbnail_url) return property.thumbnail_url;
+    if (property.imageUrl) return property.imageUrl;
+    if (property.images && property.images.length > 0) {
+      return property.images[0].url || property.images[0].image_url;
+    }
+    if (property.property_images && property.property_images.length > 0) {
+      return property.property_images[0].image_url || property.property_images[0].url;
+    }
+    return "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
+  };
+
+  // Helper function to clean string values (remove extra quotes)
+  const cleanString = (str) => {
+    if (!str) return "";
+    return str.toString().replace(/^"|"$/g, '');
+  };
+
+  // Helper function to safely format price
+  const formatPrice = (price) => {
+    if (price && !isNaN(price)) {
+      return price.toLocaleString();
+    }
+    return "N/A";
+  };
+
+  // Helper function to safely format square feet
+  const formatSquareFeet = () => {
+    const sqft = property.sqft || property.square_feet;
+    if (sqft && !isNaN(sqft)) {
+      return sqft.toLocaleString();
+    }
+    return "N/A";
+  };
+
   return (
     <div className="card group">
       {/* Image Container */}
       <div className="relative overflow-hidden h-48 xs:h-56 sm:h-64">
         <img
-          src={property.imageUrl}
-          alt={property.title}
+          src={getImageUrl()}
+          alt={property.title || "Property"}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80";
+          }}
         />
 
         {/* Price Badge */}
         <div className="absolute top-2 xs:top-4 left-2 xs:left-4 bg-white dark:bg-brown-dark px-2 xs:px-3 py-1 rounded-md shadow-md">
           <span className="font-heading font-bold text-sm xs:text-base text-brown-dark dark:text-beige-light">
-            ${property.price.toLocaleString()}
-            {property.isRental && (
+            ${formatPrice(property.price)}
+            {(property.isRental || property.sale_type === "For Rent") && (
               <span className="text-xs xs:text-sm font-normal">/mo</span>
             )}
           </span>
@@ -46,9 +87,9 @@ const PropertyCard = ({ property }) => {
         </button>
 
         {/* Property Type Badge */}
-        {property.type && (
+        {(property.type || property.property_type) && (
           <div className="absolute bottom-2 xs:bottom-4 left-2 xs:left-4 bg-taupe text-white px-2 xs:px-3 py-1 text-xs xs:text-sm rounded-md">
-            {property.type}
+            {cleanString(property.type || property.property_type)}
           </div>
         )}
       </div>
@@ -56,7 +97,7 @@ const PropertyCard = ({ property }) => {
       {/* Content */}
       <div className="p-3 xs:p-4">
         <h3 className="font-heading font-bold text-base xs:text-lg sm:text-xl mb-1 xs:mb-2 text-brown-dark dark:text-beige-light line-clamp-1">
-          {property.title}
+          {cleanString(property.title) || "Property"}
         </h3>
 
         {/* Location */}
@@ -64,7 +105,7 @@ const PropertyCard = ({ property }) => {
           <MapPinIcon className="h-3 w-3 xs:h-4 xs:w-4 mr-1 flex-shrink-0" />
 
           <span className="text-xs xs:text-sm truncate">
-            {property.location}
+            {cleanString(property.location) || "Location not specified"}
           </span>
         </div>
 
@@ -84,7 +125,7 @@ const PropertyCard = ({ property }) => {
                 d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
               />
             </svg>
-            <span className="text-xs xs:text-sm">{property.bedrooms} Beds</span>
+            <span className="text-xs xs:text-sm">{property.bedrooms || 0} Beds</span>
           </div>
           <div className="flex items-center">
             <svg
@@ -101,7 +142,7 @@ const PropertyCard = ({ property }) => {
               />
             </svg>
             <span className="text-xs xs:text-sm">
-              {property.bathrooms} Baths
+              {property.bathrooms || 0} Baths
             </span>
           </div>
           <div className="flex items-center">
@@ -119,7 +160,7 @@ const PropertyCard = ({ property }) => {
               />
             </svg>
             <span className="text-xs xs:text-sm">
-              {property.sqft.toLocaleString()} sqft
+              {formatSquareFeet()} sqft
             </span>
           </div>
         </div>
