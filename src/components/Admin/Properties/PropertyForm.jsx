@@ -16,9 +16,24 @@ const PropertyForm = () => {
   const {
     register,
     handleSubmit,
-    setValue,
+    watch,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: "",
+      location: "",
+      price: 0,
+      bedrooms: 0,
+      bathrooms: 0,
+      squareFeet: 0,
+      description: "",
+      floorPlanUrl: "",
+      neighborhood: "",
+      propertyTypeId: "",
+      saleTypeId: ""
+    }
+  });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -77,47 +92,62 @@ const PropertyForm = () => {
         if (error) throw error;
         if (!data) throw new Error("Property not found");
 
-        // Set form values
-        setValue("title", data.title);
-        setValue("location", data.location);
-        setValue("price", data.price);
-        setValue("bedrooms", data.bedrooms);
-        setValue("bathrooms", data.bathrooms);
-        setValue("squareFeet", data.square_feet);
-        setValue("description", data.description || "");
-        setValue("floorPlanUrl", data.floor_plan_url || "");
-        setValue("neighborhood", data.neighborhood || "");
-        setValue("propertyTypeId", data.property_type_id);
-        setValue("saleTypeId", data.sale_type_id);
+        console.log('Fetched property data:', data); // Debug log
 
-        // Set images - handle both property_images and images arrays
-        if (data.property_images && data.property_images.length > 0) {
+        // Handle the nested structure returned by get_property_details
+        const propertyData = data.property || data;
+
+        // Prepare form data for reset
+        const formData = {
+          title: propertyData.title?.replace(/^"|"$/g, '') || "", // Remove quotes if present
+          location: propertyData.location?.replace(/^"|"$/g, '') || "",
+          price: propertyData.price || 0,
+          bedrooms: propertyData.bedrooms || 0,
+          bathrooms: propertyData.bathrooms || 0,
+          squareFeet: propertyData.square_feet || 0,
+          description: propertyData.description?.replace(/^"|"$/g, '') || "",
+          floorPlanUrl: propertyData.floor_plan_url || "",
+          neighborhood: propertyData.neighborhood?.replace(/^"|"$/g, '') || "",
+          propertyTypeId: propertyData.property_type_id || "",
+          saleTypeId: propertyData.sale_type_id || ""
+        };
+
+        console.log('Form data to reset with:', formData);
+
+        // Use reset instead of individual setValue calls for better form population
+        reset(formData);
+
+        // Set images - handle the structure returned by get_property_details
+        if (data.images && data.images.length > 0) {
           setImages(
-            data.property_images.map((img) => ({
+            data.images.map((img) => ({
               id: img.id,
               url: img.image_url,
-              order: img.order,
+              order: img.order || 0,
             }))
           );
-        } else if (data.images && data.images.length > 0) {
+        } else if (propertyData.property_images && propertyData.property_images.length > 0) {
+          // Fallback for other data structures
           setImages(
-            data.images.map((img, index) => ({
-              id: img.id || index,
-              url: img.url || img.image_url,
-              order: img.order || index,
+            propertyData.property_images.map((img) => ({
+              id: img.id,
+              url: img.image_url,
+              order: img.order || 0,
             }))
           );
         }
 
-        // Set features - handle both property_features and features arrays
-        if (data.property_features && data.property_features.length > 0) {
-          const featureIds = data.property_features
-            .map((pf) => pf.feature?.id || pf.feature_id)
+        // Set features - handle the structure returned by get_property_details
+        if (data.features && data.features.length > 0) {
+          const featureIds = data.features
+            .map((f) => f.id)
             .filter(Boolean);
           setSelectedFeatures(featureIds);
-        } else if (data.features && data.features.length > 0) {
-          const featureIds = data.features
-            .map((f) => f.id || f)
+          console.log('Set selected features:', featureIds); // Debug log
+        } else if (propertyData.property_features && propertyData.property_features.length > 0) {
+          // Fallback for other data structures
+          const featureIds = propertyData.property_features
+            .map((pf) => pf.feature?.id || pf.feature_id)
             .filter(Boolean);
           setSelectedFeatures(featureIds);
         }
@@ -130,7 +160,15 @@ const PropertyForm = () => {
     };
 
     fetchProperty();
-  }, [id, isEditMode, setValue]);
+  }, [id, isEditMode, reset]);
+
+  // Debug useEffect to monitor form values
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log('Form value changed:', { name, type, value: value[name] });
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   // Handle form submission
   const onSubmit = async (data) => {
