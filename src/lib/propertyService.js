@@ -341,4 +341,20 @@ export const propertyService = {
 
     return { data, error: null };
   },
+
+  /**
+   * Get the 4 most recent properties for the client dashboard
+   * @returns {Promise<{data: Array, error: Object}>}
+   */
+  async getRecentProperties() {
+    try {
+      const { data, error } = await supabase.rpc('get_recent_properties');
+
+      if (error) throw error;
+      return { data: data || [], error: null };
+    } catch (error) {
+      console.error('Error fetching recent properties:', error);
+      return { data: null, error };
+    }
+  },
 };

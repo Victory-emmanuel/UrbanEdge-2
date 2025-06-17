@@ -21,6 +21,7 @@ import PropertyForm from "./components/Admin/Properties/PropertyForm";
 // Client Components
 import ClientDashboard from "./components/Client/Dashboard/ClientDashboard";
 import PropertyDetail from "./components/Client/Properties/PropertyDetail";
+import ChatInterface from "./components/Client/Chat/ChatInterface";
 
 // Auth Components
 import Login from "./components/Auth/Login";
@@ -119,6 +120,24 @@ function App() {
                       <ProtectedRoute
                         element={<PropertyForm />}
                         requireAdmin={true}
+                      />
+                    }
+                  />
+
+                  {/* Chat Routes */}
+                  <Route
+                    path="/client/chat"
+                    element={
+                      <ProtectedRoute
+                        element={
+                          <div className="container mx-auto p-6">
+                            <h1 className="text-3xl font-bold mb-6">Chat Support</h1>
+                            <div className="bg-white dark:bg-brown-dark rounded-lg shadow-sm border border-gray-200 dark:border-brown p-6">
+                              <ChatInterface />
+                            </div>
+                          </div>
+                        }
+                        requireAdmin={false}
                       />
                     }
                   />

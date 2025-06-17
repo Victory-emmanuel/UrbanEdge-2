@@ -84,8 +84,8 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Check if user is admin
-  const isAdmin = user?.user_metadata?.is_admin || false;
+  // Check if user is admin - check both user_metadata and raw_user_meta_data
+  const isAdmin = user?.user_metadata?.is_admin || user?.raw_user_meta_data?.is_admin || false;
 
   // Value to be provided by the context
   const value = {

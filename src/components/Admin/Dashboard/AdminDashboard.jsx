@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import { propertyService } from "../../../lib/propertyService";
 import { userService } from "../../../lib/userService";
+import AdminChatInterface from "../Chat/AdminChatInterface";
 
 /**
  * Admin Dashboard component
@@ -133,6 +134,12 @@ const AdminDashboard = () => {
             className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "users" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}
           >
             Users
+          </button>
+          <button
+            onClick={() => setActiveTab("chat")}
+            className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "chat" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}
+          >
+            Chat Management
           </button>
         </nav>
       </div>
@@ -270,6 +277,21 @@ const AdminDashboard = () => {
               </table>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Chat Tab */}
+      {activeTab === "chat" && (
+        <div>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              Chat Management
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              Manage client conversations and provide support
+            </p>
+          </div>
+          <AdminChatInterface />
         </div>
       )}
     </div>
