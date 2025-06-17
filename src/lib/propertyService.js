@@ -1,6 +1,44 @@
 import { supabase } from './supabase';
 
 /**
+ * Geocoding utility to get coordinates from address
+ * Uses OpenStreetMap Nominatim API (free, no API key required)
+ * @param {string} address - The address to geocode
+ * @returns {Promise<{latitude: number, longitude: number} | null>}
+ */
+const geocodeAddress = async (address) => {
+  if (!address || address.trim() === '') {
+    return null;
+  }
+
+  try {
+    const encodedAddress = encodeURIComponent(address.trim());
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1&addressdetails=1`
+    );
+
+    if (!response.ok) {
+      throw new Error('Geocoding request failed');
+    }
+
+    const data = await response.json();
+
+    if (data && data.length > 0) {
+      const result = data[0];
+      return {
+        latitude: parseFloat(result.lat),
+        longitude: parseFloat(result.lon)
+      };
+    }
+
+    return null;
+  } catch (error) {
+    console.warn('Geocoding failed:', error);
+    return null;
+  }
+};
+
+/**
  * Service for handling property-related database operations
  */
 export const propertyService = {
@@ -51,7 +89,7 @@ export const propertyService = {
    */
   async getPropertyById(id) {
     const { data, error } = await supabase.rpc('get_property_details', {
-      p_property_id: id
+      property_id: id
     });
 
     if (error) {
@@ -101,7 +139,9 @@ export const propertyService = {
       p_description: property.description,
       p_floor_plan_url: property.floorPlanUrl,
       p_neighborhood: property.neighborhood,
-      p_feature_ids: property.features || []
+      p_feature_ids: property.features || [],
+      p_latitude: property.latitude ? (isNaN(parseFloat(property.latitude)) ? null : parseFloat(property.latitude)) : null,
+      p_longitude: property.longitude ? (isNaN(parseFloat(property.longitude)) ? null : parseFloat(property.longitude)) : null
     });
 
     if (error) return { data: null, error };
@@ -149,11 +189,29 @@ export const propertyService = {
     if (property.neighborhood) fieldsToUpdate.neighborhood = property.neighborhood;
     if (property.propertyTypeId && property.propertyTypeId.trim()) fieldsToUpdate.property_type_id = property.propertyTypeId.trim();
     if (property.saleTypeId && property.saleTypeId.trim()) fieldsToUpdate.sale_type_id = property.saleTypeId.trim();
+    if (property.latitude !== undefined && property.latitude !== null && property.latitude !== '') {
+      const lat = parseFloat(property.latitude);
+      if (!isNaN(lat)) {
+        fieldsToUpdate.latitude = lat;
+      }
+    }
+    if (property.longitude !== undefined && property.longitude !== null && property.longitude !== '') {
+      const lng = parseFloat(property.longitude);
+      if (!isNaN(lng)) {
+        fieldsToUpdate.longitude = lng;
+      }
+    }
 
     // Always update the timestamp
     fieldsToUpdate.updated_at = new Date().toISOString();
 
     console.log('PropertyService: Updating property', id, 'with fields:', fieldsToUpdate);
+    console.log('PropertyService: Coordinate types:', {
+      latitude: typeof fieldsToUpdate.latitude,
+      longitude: typeof fieldsToUpdate.longitude,
+      latValue: fieldsToUpdate.latitude,
+      lngValue: fieldsToUpdate.longitude
+    });
 
     // Call the update_property RPC function
     const { data, error } = await supabase.rpc('update_property', {
@@ -246,5 +304,41 @@ export const propertyService = {
     const { data, error } = await supabase.rpc('get_filter_options');
     if (error) return { data: null, error };
     return { data: data.features, error: null };
+  },
+
+  /**
+   * Geocode an address to get coordinates
+   * @param {string} address - The address to geocode
+   * @returns {Promise<{latitude: number, longitude: number} | null>}
+   */
+  async geocodeAddress(address) {
+    return await geocodeAddress(address);
+  },
+
+  /**
+   * Get properties within a specific map bounds
+   * @param {Object} bounds - Map bounds {north, south, east, west}
+   * @param {Object} filters - Additional filters
+   * @returns {Promise<{data: Array, error: Object}>}
+   */
+  async getPropertiesInBounds(bounds, filters = {}) {
+    const params = {
+      ...filters,
+      north_lat: bounds.north,
+      south_lat: bounds.south,
+      east_lng: bounds.east,
+      west_lng: bounds.west,
+      limit_val: filters.limit || 100,
+      offset_val: filters.offset || 0
+    };
+
+    const { data, error } = await supabase.rpc('get_properties_in_bounds', params);
+
+    if (error) {
+      console.error('Error fetching properties in bounds:', error);
+      return { data: null, error };
+    }
+
+    return { data, error: null };
   },
 };

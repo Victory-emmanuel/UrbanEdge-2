@@ -31,7 +31,9 @@ const PropertyForm = () => {
       floorPlanUrl: "",
       neighborhood: "",
       propertyTypeId: "",
-      saleTypeId: ""
+      saleTypeId: "",
+      latitude: "",
+      longitude: ""
     }
   });
 
@@ -43,6 +45,7 @@ const PropertyForm = () => {
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [images, setImages] = useState([]);
   const [newImageUrl, setNewImageUrl] = useState("");
+  const [geocoding, setGeocoding] = useState(false);
 
   // Redirect non-admin users
   useEffect(() => {
@@ -109,7 +112,9 @@ const PropertyForm = () => {
           floorPlanUrl: propertyData.floor_plan_url || "",
           neighborhood: propertyData.neighborhood?.replace(/^"|"$/g, '') || "",
           propertyTypeId: propertyData.property_type_id || "",
-          saleTypeId: propertyData.sale_type_id || ""
+          saleTypeId: propertyData.sale_type_id || "",
+          latitude: propertyData.latitude ? propertyData.latitude.toString() : "",
+          longitude: propertyData.longitude ? propertyData.longitude.toString() : ""
         };
 
         console.log('Form data to reset with:', formData);
@@ -189,6 +194,8 @@ const PropertyForm = () => {
         neighborhood: data.neighborhood?.trim() || '',
         propertyTypeId: data.propertyTypeId?.trim() || '',
         saleTypeId: data.saleTypeId?.trim() || '',
+        latitude: data.latitude ? parseFloat(data.latitude) : null,
+        longitude: data.longitude ? parseFloat(data.longitude) : null,
         images: images,
         features: selectedFeatures,
       };
@@ -247,6 +254,37 @@ const PropertyForm = () => {
         return [...prev, featureId];
       }
     });
+  };
+
+  // Handle automatic geocoding
+  const handleGeocode = async () => {
+    const location = watch("location");
+    if (!location || location.trim() === "") {
+      setError("Please enter a location first");
+      return;
+    }
+
+    setGeocoding(true);
+    setError(null);
+
+    try {
+      const coordinates = await propertyService.geocodeAddress(location);
+      if (coordinates) {
+        // Update form values with coordinates
+        reset({
+          ...watch(),
+          latitude: coordinates.latitude.toString(),
+          longitude: coordinates.longitude.toString()
+        });
+      } else {
+        setError("Could not find coordinates for this location. Please enter them manually.");
+      }
+    } catch (err) {
+      console.error("Geocoding error:", err);
+      setError("Failed to geocode address. Please enter coordinates manually.");
+    } finally {
+      setGeocoding(false);
+    }
   };
 
   if (loading && isEditMode) {
@@ -643,6 +681,53 @@ const PropertyForm = () => {
                 {...register("neighborhood")}
                 className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
               />
+            </div>
+
+            {/* Map Coordinates Section */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-900">Map Coordinates</h3>
+                <button
+                  type="button"
+                  onClick={handleGeocode}
+                  disabled={geocoding}
+                  className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-3 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
+                >
+                  {geocoding ? "Finding..." : "Auto-Find Coordinates"}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">
+                    Latitude
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    {...register("latitude")}
+                    placeholder="e.g., 40.7128"
+                    className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-800 mb-2">
+                    Longitude
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    {...register("longitude")}
+                    placeholder="e.g., -74.0060"
+                    className="w-full px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
+                  />
+                </div>
+              </div>
+
+              <p className="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg border border-blue-200">
+                <strong>Tip:</strong> Enter the location address above and click "Auto-Find Coordinates" to automatically populate these fields, or enter coordinates manually.
+              </p>
             </div>
 
             <div>

@@ -15,6 +15,7 @@ const PropertiesPage = () => {
   const navigate = useNavigate();
   const [view, setView] = useState("grid");
   const [sortBy, setSortBy] = useState("newest");
+  const [selectedPropertyId, setSelectedPropertyId] = useState(null);
   const [filters, setFilters] = useState({
     location: "",
     minPrice: "",
@@ -84,6 +85,15 @@ const PropertiesPage = () => {
 
     const page = parseInt(searchParams.get("page")) || 1;
     const sort = searchParams.get("sort") || "newest";
+
+    // Handle map-specific parameters
+    if (searchParams.get("lat") && searchParams.get("lng")) {
+      setView("map"); // Switch to map view if coordinates are provided
+    }
+
+    if (searchParams.get("property")) {
+      setSelectedPropertyId(searchParams.get("property"));
+    }
 
     setFilters(initialFilters);
     setSortBy(sort);
@@ -257,7 +267,11 @@ const PropertiesPage = () => {
                   <PropertyGrid properties={properties} loading={loading} />
                 ) : (
                   <div className="h-[700px]">
-                    <PropertyMap properties={properties} />
+                    <PropertyMap
+                      properties={properties}
+                      selectedPropertyId={selectedPropertyId}
+                      onPropertySelect={(property) => setSelectedPropertyId(property.id)}
+                    />
                   </div>
                 )}
               </div>

@@ -165,13 +165,23 @@ const PropertyCard = ({ property }) => {
           </div>
         </div>
 
-        {/* CTA */}
-        <Link
-          to={`/properties/${property.id}`}
-          className="block w-full text-center py-1 xs:py-2 text-xs xs:text-sm border-2 border-taupe text-taupe hover:bg-taupe hover:text-white transition-colors duration-300 rounded-md font-medium"
-        >
-          View Details
-        </Link>
+        {/* CTA Buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          <Link
+            to={`/properties/${property.id}`}
+            className="block text-center py-1 xs:py-2 text-xs xs:text-sm border-2 border-taupe text-taupe hover:bg-taupe hover:text-white transition-colors duration-300 rounded-md font-medium"
+          >
+            View Details
+          </Link>
+          {property.latitude && property.longitude && (
+            <Link
+              to={`/properties?lat=${property.latitude}&lng=${property.longitude}&zoom=15&property=${property.id}`}
+              className="block text-center py-1 xs:py-2 text-xs xs:text-sm border-2 border-brown text-brown hover:bg-brown hover:text-white transition-colors duration-300 rounded-md font-medium"
+            >
+              View on Map
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

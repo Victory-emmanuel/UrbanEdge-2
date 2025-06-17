@@ -16,6 +16,7 @@ import PropertyTabs from "../components/Properties/PropertyDetail/PropertyTabs";
 import PropertyContactForm from "../components/Properties/PropertyDetail/PropertyContactForm";
 import PropertyMortgageCalculator from "../components/Properties/PropertyDetail/PropertyMortgageCalculator";
 import SimilarProperties from "../components/Properties/PropertyDetail/SimilarProperties";
+import PropertyLocationMap from "../components/Map/PropertyLocationMap";
 
 const PropertyDetailPage = () => {
   const { id } = useParams();
@@ -233,6 +234,32 @@ const PropertyDetailPage = () => {
               features={propertyFeatures}
               amenities={amenities}
             />
+          </div>
+
+          {/* Property Location Map */}
+          <div className="mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="bg-white dark:bg-brown-dark rounded-lg shadow-lg p-6">
+                <h2 className="text-2xl font-heading font-bold text-brown-dark dark:text-beige-light mb-4">
+                  Property Location
+                </h2>
+                <div className="mb-4">
+                  <p className="text-brown dark:text-beige-medium">
+                    <span className="font-semibold">Address:</span> {property.location}
+                  </p>
+                </div>
+                <PropertyLocationMap
+                  property={property}
+                  height="400px"
+                  showPopup={true}
+                  zoom={15}
+                />
+              </div>
+            </motion.div>
           </div>
 
           {/* Main Content */}

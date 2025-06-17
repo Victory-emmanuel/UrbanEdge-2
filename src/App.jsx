@@ -12,6 +12,7 @@ import PropertyDetailPage from "./pages/PropertyDetailPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import ContactPage from "./pages/ContactPage";
+import MapDemoPage from "./pages/MapDemoPage";
 
 // Admin Components
 import AdminDashboard from "./components/Admin/Dashboard/AdminDashboard";
@@ -72,6 +73,8 @@ function App() {
                   <Route path="/blog/:id" element={<BlogPostPage />} />
 
                   <Route path="/contact" element={<ContactPage />} />
+
+                  <Route path="/map-demo" element={<MapDemoPage />} />
 
                   {/* Client Dashboard Routes */}
                   <Route
