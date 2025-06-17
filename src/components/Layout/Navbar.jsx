@@ -131,7 +131,7 @@ const Navbar = () => {
                       className="block px-4 py-2 text-sm text-brown dark:text-beige-medium hover:bg-beige-light/20 dark:hover:bg-brown/20"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      My Properties
+                      Dashboard
                     </Link>
 
                     <button
@@ -220,7 +220,7 @@ const Navbar = () => {
                     to="/client/dashboard"
                     className="py-2 font-medium text-brown-dark dark:text-beige-light"
                   >
-                    My Properties
+                   Dashboard
                   </Link>
 
                   <button

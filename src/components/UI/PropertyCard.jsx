@@ -1,16 +1,69 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HeartIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { formatPropertyPrice } from "../../utils/currencyUtils";
+import { favoritesService } from "../../lib/favoritesService";
+import { useAuth } from "../../contexts/AuthContext";
 
-const PropertyCard = ({ property }) => {
-  const [isFavorite, setIsFavorite] = useState(property.isFavorite || false);
+const PropertyCard = ({ property, onFavoriteToggle }) => {
+  const { user } = useAuth();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const toggleFavorite = (e) => {
+  // Check if property is favorited when component mounts or user changes
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (user && property.id) {
+        const { data } = await favoritesService.isPropertyFavorited(property.id);
+        setIsFavorite(data);
+      } else {
+        setIsFavorite(false);
+      }
+    };
+
+    checkFavoriteStatus();
+  }, [user, property.id]);
+
+  const toggleFavorite = async (e) => {
     e.preventDefault();
-    setIsFavorite(!isFavorite);
-    // Here you would typically call an API to save the favorite status
+    e.stopPropagation();
+
+    console.log('Heart icon clicked for property:', property.id);
+    console.log('Current favorite status:', isFavorite);
+    console.log('Current user:', user?.id);
+
+    // Require authentication for favorites
+    if (!user) {
+      alert('Please sign in to add properties to your favorites');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      console.log('Calling toggleFavorite service...');
+      const result = await favoritesService.toggleFavorite(property.id, isFavorite);
+      console.log('Toggle favorite result:', result);
+
+      if (result.error) {
+        console.error('Error toggling favorite:', result.error);
+        alert('Failed to update favorites. Please try again.');
+      } else {
+        console.log('Successfully toggled favorite, updating UI state');
+        setIsFavorite(!isFavorite);
+
+        // Call the callback if provided
+        if (onFavoriteToggle) {
+          onFavoriteToggle();
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+      alert('Failed to update favorites. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Helper function to get the first image URL
@@ -71,13 +124,18 @@ const PropertyCard = ({ property }) => {
         {/* Favorite Button */}
         <button
           onClick={toggleFavorite}
-          className="absolute top-2 xs:top-4 right-2 xs:right-4 p-1 xs:p-2 bg-white dark:bg-brown-dark rounded-full shadow-md hover:shadow-lg transition-shadow"
+          disabled={isLoading}
+          className={`absolute top-2 xs:top-4 right-2 xs:right-4 p-1 xs:p-2 bg-white dark:bg-brown-dark rounded-full shadow-md hover:shadow-lg transition-all duration-200 ${
+            isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'
+          }`}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
         >
-          {isFavorite ? (
-            <HeartIconSolid className="h-4 w-4 xs:h-5 xs:w-5 text-destructive" />
+          {isLoading ? (
+            <div className="h-4 w-4 xs:h-5 xs:w-5 animate-spin rounded-full border-2 border-brown-dark dark:border-beige-light border-t-transparent"></div>
+          ) : isFavorite ? (
+            <HeartIconSolid className="h-4 w-4 xs:h-5 xs:w-5 text-red-500" />
           ) : (
-            <HeartIcon className="h-4 w-4 xs:h-5 xs:w-5 text-brown-dark dark:text-beige-light" />
+            <HeartIcon className="h-4 w-4 xs:h-5 xs:w-5 text-brown-dark dark:text-beige-light hover:text-red-500 transition-colors" />
           )}
         </button>
 
