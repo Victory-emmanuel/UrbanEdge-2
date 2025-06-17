@@ -41,11 +41,11 @@ export const userService = {
    */
   async isAdmin() {
     const { data: { user } } = await supabase.auth.getUser();
-    
+
     if (!user) return false;
-    
-    // Check if user has admin flag in metadata
-    return user.user_metadata?.is_admin === true;
+
+    // Check if user has admin flag in metadata - check both locations
+    return user.user_metadata?.is_admin === true || user.raw_user_meta_data?.is_admin === true;
   },
   
   /**
@@ -53,12 +53,16 @@ export const userService = {
    * @returns {Promise<{data: Array, error: Object}>}
    */
   async getAllUsers() {
-    // This requires admin privileges and should be protected by RLS
-    const { data, error } = await supabase
-      .from('auth.users')
-      .select('*');
-      
-    return { data, error };
+    try {
+      // Use the get_all_users RPC function which is protected by admin checks
+      const { data, error } = await supabase.rpc('get_all_users');
+
+      if (error) throw error;
+      return { data: data || [], error: null };
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      return { data: null, error };
+    }
   },
   
   /**
@@ -68,17 +72,18 @@ export const userService = {
    * @returns {Promise<{data: Object, error: Object}>}
    */
   async setUserAdminStatus(userId, isAdmin) {
-    // This requires admin privileges and should be protected by RLS
-    // In a real application, this would typically be done through a server function
-    // as it requires higher privileges than the client should have
-    
-    // For demonstration purposes, we'll show how it might be structured
-    const { data, error } = await supabase
-      .rpc('set_user_admin_status', { 
-        user_id: userId,
-        is_admin: isAdmin 
+    try {
+      // Use the set_user_admin_status RPC function which is protected by admin checks
+      const { data, error } = await supabase.rpc('set_user_admin_status', {
+        p_user_id: userId,
+        p_is_admin: isAdmin
       });
-      
-    return { data, error };
+
+      if (error) throw error;
+      return { data, error: null };
+    } catch (error) {
+      console.error('Error setting user admin status:', error);
+      return { data: null, error };
+    }
   }
 };
