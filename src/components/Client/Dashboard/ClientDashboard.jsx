@@ -121,11 +121,11 @@ const ClientDashboard = () => {
 
   // Format price display
   const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
+    const formattedNumber = new Intl.NumberFormat("en-NG", {
+      minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
+    return `₦${formattedNumber}`;
   };
 
   // Get feature names for a property

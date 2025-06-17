@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HeartIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
+import { formatPropertyPrice } from "../../utils/currencyUtils";
 
 const PropertyCard = ({ property }) => {
   const [isFavorite, setIsFavorite] = useState(property.isFavorite || false);
@@ -32,13 +33,7 @@ const PropertyCard = ({ property }) => {
     return str.toString().replace(/^"|"$/g, '');
   };
 
-  // Helper function to safely format price
-  const formatPrice = (price) => {
-    if (price && !isNaN(price)) {
-      return price.toLocaleString();
-    }
-    return "N/A";
-  };
+
 
   // Helper function to safely format square feet
   const formatSquareFeet = () => {
@@ -66,7 +61,7 @@ const PropertyCard = ({ property }) => {
         {/* Price Badge */}
         <div className="absolute top-2 xs:top-4 left-2 xs:left-4 bg-white dark:bg-brown-dark px-2 xs:px-3 py-1 rounded-md shadow-md">
           <span className="font-heading font-bold text-sm xs:text-base text-brown-dark dark:text-beige-light">
-            ${formatPrice(property.price)}
+            {formatPropertyPrice(property.price)}
             {(property.isRental || property.sale_type === "For Rent") && (
               <span className="text-xs xs:text-sm font-normal">/mo</span>
             )}

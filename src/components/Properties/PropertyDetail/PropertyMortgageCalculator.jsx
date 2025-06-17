@@ -59,12 +59,11 @@ const PropertyMortgageCalculator = ({ propertyPrice }) => {
   };
 
   const formatCurrency = (value) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
+    const formattedNumber = new Intl.NumberFormat("en-NG", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
+    return `₦${formattedNumber}`;
   };
 
   return (

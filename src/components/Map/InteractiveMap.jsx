@@ -95,11 +95,11 @@ const MapEventHandler = ({ onBoundsChange, onZoomChange }) => {
 
 const PropertyPopup = ({ property }) => {
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    const formattedNumber = new Intl.NumberFormat('en-NG', {
+      minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(price);
+    return `₦${formattedNumber}`;
   };
 
   const primaryImage = property.images && property.images.length > 0 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { propertyService } from "../../../lib/propertyService";
+import { formatPropertyPrice } from "../../../utils/currencyUtils";
 
 /**
  * Property Detail component for displaying detailed information about a property
@@ -40,13 +41,13 @@ const PropertyDetail = () => {
   }, [id]);
 
   // Format price display
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
+  // const formatPrice = (price) => {
+  //   const formattedNumber = new Intl.NumberFormat("en-NG", {
+  //     minimumFractionDigits: 0,
+  //     maximumFractionDigits: 0,
+  //   }).format(price);
+  //   return `₦${formattedNumber}`;
+  // };
 
   // Get sorted images
   const getSortedImages = () => {
@@ -140,7 +141,7 @@ const PropertyDetail = () => {
             </div>
             <div className="mt-4 md:mt-0">
               <p className="text-3xl font-bold text-blue-600">
-                {formatPrice(property.price)}
+               {formatPropertyPrice(property.price)}
               </p>
               <p className="text-gray-500 text-right">
                 {property.sale_type?.name}
