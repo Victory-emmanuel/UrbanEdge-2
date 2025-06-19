@@ -3,6 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { propertyService } from "../../../lib/propertyService";
 import { useAuth } from "../../../contexts/AuthContext";
+import {
+  handleImageError,
+  isValidImageUrl,
+  sanitizeImageUrl,
+  getFallbackImage,
+  preloadImage
+} from "../../../utils/imageUtils";
 
 /**
  * Property Form component for creating and editing properties
@@ -226,14 +233,37 @@ const PropertyForm = () => {
     }
   };
 
-  // Handle adding a new image
-  const handleAddImage = () => {
-    if (!newImageUrl.trim()) return;
+  // Handle adding a new image with validation
+  const handleAddImage = async () => {
+    if (!newImageUrl.trim()) {
+      setError("Please enter an image URL");
+      return;
+    }
 
+    // Validate the image URL
+    if (!isValidImageUrl(newImageUrl)) {
+      setError("Please enter a valid image URL (must be a direct link to an image file or from a supported image hosting service)");
+      return;
+    }
+
+    // Sanitize the URL
+    const sanitizedUrl = sanitizeImageUrl(newImageUrl, 'form');
+
+    // Optional: Preload image to verify it loads successfully
+    const imageLoads = await preloadImage(sanitizedUrl);
+    if (!imageLoads) {
+      setError("The image URL appears to be invalid or the image cannot be loaded. Please check the URL and try again.");
+      return;
+    }
+
+    // Clear any previous errors
+    setError(null);
+
+    // Add the validated image
     setImages([
       ...images,
       {
-        url: newImageUrl,
+        url: sanitizedUrl,
         order: images.length,
       },
     ]);
@@ -934,19 +964,26 @@ const PropertyForm = () => {
               <label className="block text-sm font-semibold text-gray-800 mb-3">
                 Images
               </label>
+              <div className="mb-2">
+                <p className="text-xs text-gray-600 mb-3">
+                  Add images by entering direct image URLs. Supported formats: JPG, PNG, GIF, WebP.
+                  Recommended sources: Unsplash, your own hosting, or other reliable image services.
+                </p>
+              </div>
               <div className="flex space-x-3 mb-4">
                 <input
                   type="text"
                   value={newImageUrl}
                   onChange={(e) => setNewImageUrl(e.target.value)}
-                  placeholder="Enter image URL"
+                  placeholder="Enter image URL (e.g., https://images.unsplash.com/...)"
                   className="flex-1 px-4 py-3 border-2 border-gray-400 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
                 />
 
                 <button
                   type="button"
                   onClick={handleAddImage}
-                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 shadow-sm"
+                  disabled={!newImageUrl.trim()}
+                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-3 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm"
                 >
                   Add
                 </button>
@@ -963,11 +1000,7 @@ const PropertyForm = () => {
                         src={image.url}
                         alt={`Property ${index + 1}`}
                         className="w-full h-32 object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://via.placeholder.com/150?text=Image+Error";
-                        }}
+                        onError={(e) => handleImageError(e, 'form')}
                       />
 
                       <button

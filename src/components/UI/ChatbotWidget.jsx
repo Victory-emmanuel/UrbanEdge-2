@@ -1,208 +1,77 @@
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ChatBubbleLeftRightIcon,
-  XMarkIcon,
-  PaperAirplaneIcon,
-} from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
 
+/**
+ * JotForm AI Chatbot Widget Component
+ *
+ * This component integrates the JotForm AI chatbot into the UrbanEdge real estate application.
+ * The chatbot provides AI-powered assistance for real estate inquiries and property searches.
+ *
+ * Features:
+ * - Loads JotForm AI chatbot script dynamically
+ * - Configured to skip welcome message for better UX
+ * - Maximizable interface for enhanced user interaction
+ * - Error handling for script loading failures
+ * - Responsive design that works across all screen sizes
+ */
 const ChatbotWidget = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Hello! How can I help you with your real estate needs today?",
-      isBot: true,
-    },
-  ]);
-  const [inputValue, setInputValue] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptError, setScriptError] = useState(false);
 
-  // Auto-scroll to bottom of messages
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    // Check if script is already loaded to prevent duplicate loading
+    const existingScript = document.querySelector(
+      'script[src*="cdn.jotfor.ms/agent/embedjs"]'
+    );
+
+    if (existingScript) {
+      setScriptLoaded(true);
+      return;
     }
-  }, [messages]);
 
-  // Focus input when chat opens
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+    // Create and configure the JotForm script element
+    const script = document.createElement("script");
+    script.src = "https://cdn.jotfor.ms/agent/embedjs/01977ef6126a721ca60420e562e7a5468ca6/embed.js?skipWelcome=1&maximizable=1";
+    script.async = true;
 
-  const toggleChat = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (inputValue.trim() === "") return;
-
-    // Add user message
-    const userMessage = {
-      id: messages.length + 1,
-      text: inputValue,
-      isBot: false,
+    // Handle successful script loading
+    script.onload = () => {
+      setScriptLoaded(true);
+      setScriptError(false);
+      console.log("✅ JotForm AI Chatbot loaded successfully");
     };
-    setMessages([...messages, userMessage]);
-    setInputValue("");
-    setIsTyping(true);
 
-    // Simulate bot response after a delay
-    setTimeout(() => {
-      const botResponses = [
-        "I'd be happy to help you find your dream property. Could you tell me what area you're interested in?",
-        "Our agents are experts in luxury properties. Would you like me to connect you with one of our specialists?",
-        "We have several new listings that might interest you. Would you like to see our featured properties?",
-        "Thank you for your interest! I'll have one of our agents contact you shortly to discuss your needs in detail.",
-        "We offer virtual tours for many of our properties. Would you like to schedule one?",
-      ];
+    // Handle script loading errors
+    script.onerror = () => {
+      setScriptError(true);
+      setScriptLoaded(false);
+      console.error("❌ Failed to load JotForm AI Chatbot script");
+    };
 
-      const randomResponse =
-        botResponses[Math.floor(Math.random() * botResponses.length)];
+    // Add script to document head
+    document.head.appendChild(script);
 
-      const botMessage = {
-        id: messages.length + 2,
-        text: randomResponse,
-        isBot: true,
-      };
+    // Cleanup function to remove script when component unmounts
+    return () => {
+      const scriptToRemove = document.querySelector(
+        'script[src*="cdn.jotfor.ms/agent/embedjs"]'
+      );
+      if (scriptToRemove) {
+        document.head.removeChild(scriptToRemove);
+      }
+    };
+  }, []);
 
-      setMessages((prevMessages) => [...prevMessages, botMessage]);
-      setIsTyping(false);
-    }, 1500);
-  };
+  // Don't render anything while script is loading or if there's an error
+  // The JotForm script will handle rendering the chatbot widget
+  if (scriptError) {
+    // Optional: You could render a fallback UI here
+    console.warn("JotForm AI Chatbot failed to load. Consider implementing a fallback.");
+    return null;
+  }
 
-  return (
-    <>
-      {/* Chat Button */}
-      <motion.button
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-taupe text-white shadow-lg flex items-center justify-center"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={toggleChat}
-        aria-label={isOpen ? "Close chat" : "Open chat"}
-      >
-        {isOpen ? (
-          <XMarkIcon className="h-6 w-6" />
-        ) : (
-          <ChatBubbleLeftRightIcon className="h-6 w-6" />
-        )}
-      </motion.button>
-
-      {/* Chat Window */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-24 right-6 z-50 w-full max-w-sm bg-white dark:bg-brown-dark rounded-lg shadow-xl overflow-hidden"
-          >
-            {/* Chat Header */}
-            <div className="bg-taupe text-white p-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center mr-3">
-                  <ChatBubbleLeftRightIcon className="h-5 w-5" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-bold">
-                    UrbanEdge Assistant
-                  </h3>
-                  <p className="text-xs opacity-80">
-                    Online | Typically replies instantly
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={toggleChat}
-                className="text-white hover:text-beige-light transition-colors"
-                aria-label="Close chat"
-              >
-                <XMarkIcon className="h-6 w-6" />
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div className="p-4 h-80 overflow-y-auto bg-beige-light/50 dark:bg-brown/50">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`mb-4 flex ${
-                    message.isBot ? "justify-start" : "justify-end"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-lg p-3 ${
-                      message.isBot
-                        ? "bg-white dark:bg-brown-dark text-brown-dark dark:text-beige-light rounded-tl-none"
-                        : "bg-taupe text-white rounded-tr-none"
-                    }`}
-                  >
-                    <p className="text-sm">{message.text}</p>
-                  </div>
-                </div>
-              ))}
-              {isTyping && (
-                <div className="mb-4 flex justify-start">
-                  <div className="bg-white dark:bg-brown-dark text-brown-dark dark:text-beige-light rounded-lg rounded-tl-none p-3">
-                    <div className="flex space-x-1">
-                      <div
-                        className="w-2 h-2 bg-taupe rounded-full animate-bounce"
-                        style={{ animationDelay: "0ms" }}
-                      ></div>
-                      <div
-                        className="w-2 h-2 bg-taupe rounded-full animate-bounce"
-                        style={{ animationDelay: "150ms" }}
-                      ></div>
-                      <div
-                        className="w-2 h-2 bg-taupe rounded-full animate-bounce"
-                        style={{ animationDelay: "300ms" }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input */}
-            <form
-              onSubmit={handleSubmit}
-              className="p-3 border-t border-beige-medium dark:border-brown"
-            >
-              <div className="flex items-center">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  placeholder="Type your message..."
-                  className="flex-grow p-2 rounded-l-md border border-r-0 border-beige-medium dark:border-brown focus:outline-none focus:ring-1 focus:ring-taupe bg-white dark:bg-brown-dark text-brown-dark dark:text-beige-light"
-                />
-
-                <button
-                  type="submit"
-                  className="bg-taupe text-white p-2 rounded-r-md border border-taupe hover:bg-brown transition-colors"
-                  aria-label="Send message"
-                >
-                  <PaperAirplaneIcon className="h-5 w-5" />
-                </button>
-              </div>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+  // The JotForm script automatically renders the chatbot widget
+  // No additional JSX needed as the script handles the UI
+  return null;
 };
 
 export default ChatbotWidget;

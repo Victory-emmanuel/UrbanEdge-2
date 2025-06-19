@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { propertyService } from "../../../lib/propertyService";
 import { formatPropertyPrice } from "../../../utils/currencyUtils";
+import { handleImageError, getFallbackImage } from "../../../utils/imageUtils";
 
 /**
  * Property Detail component for displaying detailed information about a property
@@ -49,11 +50,11 @@ const PropertyDetail = () => {
   //   return `₦${formattedNumber}`;
   // };
 
-  // Get sorted images
+  // Get sorted images with reliable fallback
   const getSortedImages = () => {
     if (!property?.property_images || !property.property_images.length) {
       return [
-        { image_url: "https://via.placeholder.com/800x600?text=No+Image" },
+        { image_url: getFallbackImage('gallery') },
       ];
     }
 
@@ -158,11 +159,7 @@ const PropertyDetail = () => {
                 src={sortedImages[activeImageIndex]?.image_url}
                 alt={`Property ${activeImageIndex + 1}`}
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://via.placeholder.com/800x600?text=Image+Error";
-                }}
+                onError={(e) => handleImageError(e, 'gallery')}
               />
 
               {sortedImages.length > 1 && (

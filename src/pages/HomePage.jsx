@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import HeroSection from "../components/Home/HeroSection";
 import FeaturedProperties from "../components/Home/FeaturedProperties";
+import LatestProperties from "../components/Home/LatestProperties";
 import ValueProposition from "../components/Home/ValueProposition";
 import HowItWorks from "../components/Home/HowItWorks";
 import Testimonials from "../components/Home/Testimonials";
@@ -22,6 +23,7 @@ const HomePage = () => {
 
       <HeroSection />
       <FeaturedProperties />
+      <LatestProperties />
       <ValueProposition />
       <HowItWorks />
       <Testimonials />

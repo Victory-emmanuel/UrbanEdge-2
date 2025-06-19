@@ -1,70 +1,139 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import SectionHeading from "../UI/SectionHeading";
 import PropertyCard from "../UI/PropertyCard";
+import { propertyService } from "../../lib/propertyService";
+import {
+  getRotationProperties,
+  getTimeUntilNextRotation,
+  logRotationInfo,
+  ROTATION_INTERVAL_MS
+} from "../../utils/propertyRotationUtils";
 
-// Sample data - in a real app, this would come from an API
-const featuredProperties = [
-  {
-    id: 1,
-    title: "Modern Luxury Villa",
-    location: "Beverly Hills, CA",
-    price: 4500000,
-    bedrooms: 5,
-    bathrooms: 4.5,
-    sqft: 4200,
-    type: "Villa",
-    imageUrl:
-      "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    isFavorite: false,
-  },
-  {
-    id: 2,
-    title: "Downtown Penthouse",
-    location: "Manhattan, NY",
-    price: 3200000,
-    bedrooms: 3,
-    bathrooms: 3,
-    sqft: 2800,
-    type: "Penthouse",
-    imageUrl:
-      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    isFavorite: true,
-  },
-  {
-    id: 3,
-    title: "Seaside Retreat",
-    location: "Malibu, CA",
-    price: 5800000,
-    bedrooms: 4,
-    bathrooms: 3.5,
-    sqft: 3600,
-    type: "House",
-    imageUrl:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    isFavorite: false,
-  },
-  {
-    id: 4,
-    title: "Urban Loft",
-    location: "Chicago, IL",
-    price: 1200000,
-    bedrooms: 2,
-    bathrooms: 2,
-    sqft: 1800,
-    type: "Loft",
-    imageUrl:
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    isFavorite: false,
-  },
-];
-
+/**
+ * Featured Properties Component with Dynamic Randomization
+ *
+ * This component displays 4 randomly selected properties that rotate automatically.
+ *
+ * 🔄 ROTATION CONFIGURATION:
+ * - Current interval: 1 minute (for testing/demonstration)
+ * - To change to production interval (1 week), update ROTATION_INTERVAL_MS in:
+ *   src/utils/propertyRotationUtils.js
+ *
+ * Features:
+ * - Fetches all available properties from database
+ * - Randomly selects 4 properties for display
+ * - Automatic rotation based on configurable interval
+ * - Consistent selection during each rotation period
+ * - Visual indicators and console logging for testing
+ * - Proper error handling and loading states
+ */
 const FeaturedProperties = () => {
+  // State management
+  const [allProperties, setAllProperties] = useState([]);
+  const [featuredProperties, setFeaturedProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [rotationTimer, setRotationTimer] = useState(null);
+
+  // Scroll functionality
   const scrollContainerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
+  // Initialize component and set up rotation
+  useEffect(() => {
+    fetchAllProperties();
+
+    // Cleanup timer on unmount
+    return () => {
+      if (rotationTimer) {
+        clearTimeout(rotationTimer);
+      }
+    };
+  }, []);
+
+  // Set up rotation timer when properties are loaded
+  useEffect(() => {
+    if (allProperties.length > 0) {
+      selectFeaturedProperties();
+      setupRotationTimer();
+    }
+  }, [allProperties]);
+
+  /**
+   * Fetch all properties from the database
+   */
+  const fetchAllProperties = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch a larger set of properties to choose from
+      const { data, error } = await propertyService.getProperties({
+        limit: 50, // Get up to 50 properties to choose from
+        offset: 0,
+        sortBy: 'newest'
+      });
+
+      if (error) {
+        throw new Error(error.message || 'Failed to fetch properties');
+      }
+
+      setAllProperties(data || []);
+    } catch (err) {
+      console.error('Error fetching properties for featured section:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Select 4 random properties for the current rotation period
+   */
+  const selectFeaturedProperties = () => {
+    if (allProperties.length === 0) return;
+
+    const selected = getRotationProperties(allProperties, 4, ROTATION_INTERVAL_MS);
+    setFeaturedProperties(selected);
+
+    // Log rotation info for testing/debugging
+    if (process.env.NODE_ENV === 'development') {
+      logRotationInfo(selected, ROTATION_INTERVAL_MS);
+    }
+  };
+
+  /**
+   * Set up automatic rotation timer
+   */
+  const setupRotationTimer = () => {
+    // Clear existing timer
+    if (rotationTimer) {
+      clearTimeout(rotationTimer);
+    }
+
+    // Calculate time until next rotation
+    const timeUntilNext = getTimeUntilNextRotation(ROTATION_INTERVAL_MS);
+
+    // Set timer for next rotation
+    const timer = setTimeout(() => {
+      selectFeaturedProperties();
+      setupRotationTimer(); // Set up next rotation
+    }, timeUntilNext);
+
+    setRotationTimer(timer);
+
+    // Log timer info for testing
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`⏰ Next featured properties rotation in ${Math.round(timeUntilNext / 1000)} seconds`);
+    }
+  };
+
+  /**
+   * Check if the scroll container can scroll left or right
+   */
   const checkScrollability = () => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -76,6 +145,10 @@ const FeaturedProperties = () => {
     }
   };
 
+  /**
+   * Scroll the container left or right
+   * @param {string} direction - 'left' or 'right'
+   */
   const scroll = (direction) => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -90,6 +163,78 @@ const FeaturedProperties = () => {
     }
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <section className="py-16 bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4">
+          <SectionHeading
+            title="Featured Properties"
+            subtitle="Explore our handpicked selection of premium properties that represent the finest in luxury living and investment opportunities."
+            centered
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, index) => (
+              <div
+                key={index}
+                className="bg-beige-medium dark:bg-brown animate-pulse rounded-lg h-96"
+              ></div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <section className="py-16 bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4">
+          <SectionHeading
+            title="Featured Properties"
+            subtitle="Explore our handpicked selection of premium properties that represent the finest in luxury living and investment opportunities."
+            centered
+          />
+
+          <div className="text-center py-12">
+            <p className="text-brown dark:text-beige-medium mb-4">
+              Unable to load featured properties at this time.
+            </p>
+            <button
+              onClick={fetchAllProperties}
+              className="btn-primary"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // No properties state
+  if (featuredProperties.length === 0) {
+    return (
+      <section className="py-16 bg-beige-light dark:bg-brown">
+        <div className="container mx-auto px-4">
+          <SectionHeading
+            title="Featured Properties"
+            subtitle="Explore our handpicked selection of premium properties that represent the finest in luxury living and investment opportunities."
+            centered
+          />
+
+          <div className="text-center py-12">
+            <p className="text-brown dark:text-beige-medium">
+              No properties available for featuring at this time.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-16 bg-beige-light dark:bg-brown">
       <div className="container mx-auto px-4">
@@ -98,6 +243,15 @@ const FeaturedProperties = () => {
           subtitle="Explore our handpicked selection of premium properties that represent the finest in luxury living and investment opportunities."
           centered
         />
+
+        {/* Rotation Indicator (Development Only) */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="text-center mb-4">
+            <span className="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+              🔄 Auto-rotating every {ROTATION_INTERVAL_MS / 1000}s (Dev Mode)
+            </span>
+          </div>
+        )}
 
         <div className="relative">
           {/* Scroll Controls */}
